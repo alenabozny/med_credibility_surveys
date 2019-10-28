@@ -36,7 +36,7 @@ class Sentence(db.Model):
 
 class Task(db.Model):
     task_id = db.Column(db.Integer, primary_key=True)
-    sentence_id = db.Column(db.Integer, db.ForeignKey('sentence.sentence_id'))
+    sentence_id = db.Column(db.Integer, db.ForeignKey('sentence.sentence_id'), unique=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     time_start = db.Column(db.DateTime)
     time_end = db.Column(db.DateTime)
