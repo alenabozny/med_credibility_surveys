@@ -1,0 +1,35 @@
+.page-content {
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+}
+
+.task-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    padding: 10px;
+}
+
+.task {
+    width: calc(100% - 40px);
+    margin: 0 20px;
+}
+
+.task .mdl-card {
+    width: 100%;
+}
+
+.task-button {
+    width: 100px;
+}
+
+.task-buttons {
+    text-align: center;
+}
+
+.instructions {
+    padding-bottom: 20px;
+    text-align: center;
+}
