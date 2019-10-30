@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block js %}
+    <script>
+        const sentences = {{ sentences |tojson }};
+    </script>
+    <script defer src="{{ url_for('static', filename='js/task.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="task-container">
+        <div class="task-button">
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" disabled>
+                Powrot
+            </button>
+        </div>
+        <div class="task">
+            {% include 'partials/instruction.html' %}
+            <div class="mdl-card mdl-shadow--2dp mdl-color--white">
+
+                <div class="mdl-card__supporting-text">
+                    <p>Slowa kluczowe: {{ keywords }}</p>
+
+
+                    text
+                </div>
+
+                <div class="mdl-card__actions mdl-card--border task-buttons">
+                    <button id="moreContext" class="mdl-button mdl-button--colored">
+                        Potrzebuje wiecej kontekstu
+                    </button>
+                    <button class="mdl-button mdl-button--colored">
+                        Zakończ
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="task-button">
+            <button class="mdl-button mdl-button--raised mdl-button--colored">
+                Zapisz
+            </button>
+        </div>
+    </div>
+{% endblock %}
