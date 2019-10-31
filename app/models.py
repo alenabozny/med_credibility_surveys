@@ -1,5 +1,6 @@
 from app import db
 from datetime import date
+import enum
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -34,10 +35,15 @@ class Sentence(db.Model):
         return '<Sentence "{}" from article {}.>'.format(self.body, self.article_id)
 
 
+class CredibilityRates(enum.Enum):
+    CRED = "credible"
+    NONCRED = "noncredible"
+    NEU = "neutral/irrelevant"
+
 class Task(db.Model):
     task_id = db.Column(db.Integer, primary_key=True)
     sentence_id = db.Column(db.Integer, db.ForeignKey('sentence.sentence_id'), unique=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     time_start = db.Column(db.DateTime)
     time_end = db.Column(db.DateTime)
-    rate = db.Column(db.Enum) # CRED, NONCRED, NEUTRAL
+    rate = db.Column(db.Enum(CredibilityRates))
