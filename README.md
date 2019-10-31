@@ -14,7 +14,7 @@
 * [ ] Widok edycji Tasku -- FRONTEND:
    * [ ] Endpoint zwracający dane
   * **Jakie będą to dane? Może być przykład modelu. Endpoint przygotuje.** @alenabozny 🔥 
-  * [ ] zliczanie czasu edycji tasku @kwarpechowski
+  * [ ] zliczanie czasu edycji tasku 🚧 @kwarpechowski
   * [ ] wysyłka JSONA z wynikami oceny i wszystkimi metrykami
    * [ ] **Moze wyspecyfikujmy metryki jakie finalnie bedziesz potrzebowac do analizy wyników?**
    * [ ] **Jakie będą to dane? Może być przykład modelu. Endpoint przygotuje.** @alenabozny 🔥 
@@ -23,8 +23,9 @@
   * **Czy użytkownik może rozpocząć badanie od dowolnego tasku?**@alenabozny
   * [ ] Endpoint zwracający dane
   * **Jakie będą to dane? Potrzebuje unikalne id do przekierowania do strony tasku** @alenabozny 🔥
-  * [ ] Widok
+  * [ ] Widok @kwarpechowski
 
 
   
 🔥 - pilne
+🚧 - w trakcie
