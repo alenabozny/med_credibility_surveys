@@ -33,3 +33,12 @@
     padding-bottom: 20px;
     text-align: center;
 }
+
+.home-container {
+    width: 50%;
+    max-width: 800px;
+}
+
+.home-container table {
+    width: 100%;
+}

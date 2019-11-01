@@ -1,5 +1,23 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>HI!</h1>
+    <div class="home-container">
+        <h3>Dostepne zadania</h3>
+        <table class="mdl-data-table mdl-data-table--selectable mdl-shadow--2dp taks-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th></th>
+                </tr>
+            </thead>
+            {% for task in tasks %}
+                <tr>
+                    <td>{{ task.task_id }}</td>
+                    <td>
+                        <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" href="task/{{task.task_id}}">Rozpocznij</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
 {% endblock %}
