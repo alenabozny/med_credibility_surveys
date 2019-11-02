@@ -42,3 +42,18 @@
 .home-container table {
     width: 100%;
 }
+
+.rate_items {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+}
+
+.rate_items > * {
+    margin: 0 5px;
+}
+
+.info-bar {
+    padding: 20px;
+    text-align: center;
+}

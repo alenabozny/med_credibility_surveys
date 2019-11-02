@@ -1,19 +1,21 @@
 from flask import render_template
-from flask import request
-from flask import redirect
-from app import app
+from flask import request, redirect, url_for, flash
+from app import app, db
 from app.forms import LoginForm
-from app.models import Task, Sentence, User
-from flask import jsonify
+from app.models import Task, Sentence, User, CredibilityRates
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import current_user, login_user, login_required, logout_user
+from datetime import datetime
 
 @app.route('/')
 
 @app.route('/index')
 @login_required
 def index():
-    tasks = Task.query.filter_by(user_id=current_user.id).all() #filtrowac po niewypelnionych zadaniach
+    tasks = Task.query.filter_by(
+        user_id=current_user.id,
+    ).all()
+
     return render_template(
         'index.html',
         title='Home',
@@ -31,16 +33,13 @@ def login():
         password = request.form.get('password')
         remember = True if request.form.get('remember_me') else False
 
-
         user = User.query.filter_by(username=username).first()
 
-
-        if not user or not check_password_hash(user.password_hash, password):
-            print("nie ok " + generate_password_hash('test'))
-        else:
-            print("loguje")
+        if user and  check_password_hash(user.password_hash, password):
             login_user(user, remember=remember)
             return redirect("/")
+        else:
+            flash('Wrong username or password')
 
         return render_template('login.html', title='Sign In', form=form)
 
@@ -54,9 +53,13 @@ def logout():
 @login_required
 def perform_task(task_id):
     if request.method == 'GET':
-        task = Task.query.filter_by(task_id=task_id, user_id=current_user.id)
-        sentence = Sentence.query.filter_by(sentence_id=task.first().sentence_id).first()
-        sentences = Sentence.query.filter_by(sentence_id=task.first().sentence_id).all()
+        task = Task.query.filter_by(task_id=task_id, user_id=current_user.id).first()
+
+        if task.time_end:
+            return redirect(url_for('index'))
+
+        sentence = Sentence.query.filter_by(sentence_id=task.sentence_id).first()
+        sentences = Sentence.query.filter_by(sentence_id=task.sentence_id).all()
 
 
         # KW: Totalnie nie rozumiem jak pobrac liste zdan dla tasku. potrzebuje by doladowywac kolejne.
@@ -68,19 +71,21 @@ def perform_task(task_id):
             'example_task.html',
             title='Task',
             sentences=sentencesList,
+            options = [e.value for e in CredibilityRates],
             sentence=sentence,
             keywords=(',').join(['keywords1', 'keywords2', 'keywords3']) #TODO skad pobierac slowa kluczowe ?
         )
     if request.method == 'POST':
-        content = request.json
+        time_start = request.form['time_start']
+        time_end = request.form['time_end']
+        rate = request.form['rate']
 
-        time_start = content['time_start'] #iso string
-        time_end = content['time_end'] # iso string
-        rate = content['rate'] # string
+        task = Task.query.filter_by(task_id=task_id, user_id=current_user.id).first()
+        task.time_start = datetime.fromtimestamp(int(time_start) / 1000)
+        task.time_end = datetime.fromtimestamp(int(time_end) / 1000)
+        task.rate = CredibilityRates(rate)
 
-        # TODO Zapisac do bazy zwrotke
-        # TODO Do response dodac id kolejnego zadania
+        db.session.commit()
 
-        resp = jsonify(nextId=2)
-        return resp
+        return redirect(url_for('task/2'))
 

@@ -8,11 +8,11 @@
 {% endblock %}
 
 {% block content %}
-    <div class="task-container">
+    <form action="" method="post" novalidate class="task-container">
         <div class="task-button">
-            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" disabled>
-                Powrot
-            </button>
+            <a href="/" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+                Back
+            </a>
         </div>
         <div class="task">
             {% include 'partials/instruction.html' %}
@@ -22,6 +22,20 @@
                     <p>Slowa kluczowe: {{ keywords }}</p>
 
                     {{ sentence.body }}
+                </div>
+
+                <div class="rate_items">
+                    {% for option in options %}
+                        <label class="mdl-radio mdl-js-radio" for="{{option}}">
+                            <input type="radio"
+                                   id="{{option}}"
+                                   name="rate"
+                                   class="mdl-radio__button"
+                                   value="{{ option }}"
+                            >
+                            <span class="mdl-radio__label">{{option}}</span>
+                        </label>
+                    {% endfor %}
                 </div>
 
                 <div class="mdl-card__actions mdl-card--border task-buttons">
@@ -34,10 +48,12 @@
                 </div>
             </div>
         </div>
+        <input type="hidden" name="time_start" />
+        <input type="hidden" name="time_end" />
         <div class="task-button">
-            <button id="save" class="mdl-button mdl-button--raised mdl-button--colored">
+            <button type="submit" id="save" class="mdl-button mdl-button--raised mdl-button--colored">
                 Zapisz
             </button>
         </div>
-    </div>
+    </form>
 {% endblock %}

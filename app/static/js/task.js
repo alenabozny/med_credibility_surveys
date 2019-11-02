@@ -12,26 +12,9 @@ dialog.querySelector('.close').addEventListener('click', function() {
 
 const saveBtn = document.querySelector('#save')
 
-const time_start = new Date().toISOString();
+document.querySelector('[name="time_start"]').value = Date.now();
 
 
 saveBtn.addEventListener('click', async () => {
-    const time_end = new Date().toISOString();
-    const rate = "noncredible";
-
-    const response = await fetch(window.location.href, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            time_start,
-            time_end,
-            rate
-        })
-    });
-
-    const { nextId } = await response.json();
-
-    window.location.href = `/task/${nextId}`
+    document.querySelector('[name="time_end"]').value = Date.now();
 });

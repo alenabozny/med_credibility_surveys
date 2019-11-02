@@ -18,11 +18,10 @@
                     <span class="mdl-layout-title">Credibility of the medical web content</span>
                     <div class="mdl-layout-spacer"></div>
                     <nav class="mdl-navigation mdl-layout--large-screen-only">
-                        <a class="mdl-navigation__link" href="{{ url_for('index') }}">Home</a>
                         {% if current_user.is_authenticated %}
-                            <a class="mdl-navigation__link" href="{{ url_for('logout') }}">Logout</a>
-                        {% else %}
-                            <a class="mdl-navigation__link" href="{{ url_for('login') }}">Login</a>
+                            <a class="mdl-navigation__link" href="{{ url_for('logout') }}">
+                                Logout <strong>{{ current_user.username }}</strong>
+                            </a>
                         {% endif %}
                     </nav>
                 </div>
@@ -30,11 +29,11 @@
             <main class="mdl-layout__content">
                 {% with messages = get_flashed_messages() %}
                     {% if messages %}
-                        <ul>
+                        <div class="mdl-color--pink-200 mdl-color-text--pink-900 mdl-shadow--4dp info-bar">
                             {% for message in messages %}
-                                <li>{{ message }}</li>
+                                {{ message }}
                             {% endfor %}
-                        </ul>
+                        </div>
                     {% endif %}
                 {% endwith %}
                 <div class="page-content">
