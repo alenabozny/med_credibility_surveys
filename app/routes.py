@@ -13,13 +13,19 @@ from datetime import datetime
 @login_required
 def index():
     tasks = Task.query.filter_by(
+        user_id=current_user.id
+    ).filter(Task.rate != None).all()
+
+    nextTask = Task.query.filter_by(
         user_id=current_user.id,
-    ).all()
+        rate = None
+    ).first()
 
     return render_template(
         'index.html',
         title='Home',
-        tasks=tasks
+        tasks=tasks,
+        nextTask=nextTask
     )
 
 @app.route('/login', methods=['GET', 'POST'])

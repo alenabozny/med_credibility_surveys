@@ -19,8 +19,7 @@
             <div class="mdl-card mdl-shadow--2dp mdl-color--white">
 
                 <div class="mdl-card__supporting-text">
-                    <p>Slowa kluczowe: {{ keywords }}</p>
-
+                    <p>Keywords: {{ keywords }}</p>
                     {{ sentence.body }}
                 </div>
 
@@ -40,10 +39,10 @@
 
                 <div class="mdl-card__actions mdl-card--border task-buttons">
                     <button id="moreContext" class="mdl-button mdl-button--colored">
-                        Potrzebuje wiecej kontekstu
+                        I need more context
                     </button>
                     <a class="mdl-button mdl-button--colored" href="/index">
-                        Zakończ
+                        finish
                     </a>
                 </div>
             </div>
@@ -51,8 +50,8 @@
         <input type="hidden" name="time_start" />
         <input type="hidden" name="time_end" />
         <div class="task-button">
-            <button type="submit" id="save" class="mdl-button mdl-button--raised mdl-button--colored">
-                Zapisz
+            <button disabled type="submit" id="save" class="mdl-button mdl-button--raised mdl-button--accent">
+                Save
             </button>
         </div>
     </form>
