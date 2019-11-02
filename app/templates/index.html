@@ -3,7 +3,7 @@
 {% block content %}
     <div class="home-container">
         {%  if nextTask %}
-            <a href="task/{{ nextTask.task_id }}" class="mdl-button mdl-js-button mdl-button--raised  mdl-button--accent">
+            <a href="{{ url_for('perform_task', task_id = nextTask.task_id) }}" class="mdl-button mdl-js-button mdl-button--raised  mdl-button--accent">
                 Evaluate next sentence
             </a>
         {% endif %}

@@ -93,5 +93,13 @@ def perform_task(task_id):
 
         db.session.commit()
 
-        return redirect(url_for('task/2'))
+        nextTask = Task.query.filter_by(
+            user_id=current_user.id,
+            rate = None
+        ).first()
 
+        if nextTask:
+            return redirect(url_for('perform_task', task_id = nextTask.task_id))
+        else:
+            flash('Thanks. You do not have any pending tasks')
+            return redirect(url_for('index'))

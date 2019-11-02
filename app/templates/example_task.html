@@ -10,7 +10,7 @@
 {% block content %}
     <form action="" method="post" novalidate class="task-container">
         <div class="task-button">
-            <a href="/" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+            <a href="{{ url_for('index') }}" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
                 Back
             </a>
         </div>
@@ -41,7 +41,7 @@
                     <button id="moreContext" class="mdl-button mdl-button--colored">
                         I need more context
                     </button>
-                    <a class="mdl-button mdl-button--colored" href="/index">
+                    <a class="mdl-button mdl-button--colored" href="{{ url_for('index') }}">
                         finish
                     </a>
                 </div>
