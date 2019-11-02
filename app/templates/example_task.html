@@ -18,8 +18,18 @@
             {% include 'partials/instruction.html' %}
             <div class="mdl-card mdl-shadow--2dp mdl-color--white">
 
+                {% if(keywords) %}
+                    <div class="mdl-color--blue-grey-50 keywords">
+                        Keywords:
+                        {% for keyword in keywords %}
+                            <span class="mdl-chip mdl-color--blue mdl-color-text--white">
+                                    <span class="mdl-chip__text">{{ keyword }}</span>
+                                </span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
                 <div class="mdl-card__supporting-text">
-                    <p>Keywords: {{ keywords }}</p>
                     {{ sentence.body }}
                 </div>
 

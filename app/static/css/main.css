@@ -66,3 +66,14 @@
     padding: 20px;
     text-align: center;
 }
+
+.keywords {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 0;
+}
+
+.keywords .mdl-chip {
+    margin-left: 5px;
+}

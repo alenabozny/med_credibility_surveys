@@ -62,6 +62,7 @@ def perform_task(task_id):
         task = Task.query.filter_by(task_id=task_id, user_id=current_user.id).first()
 
         if task.time_end:
+            flash('Your task was expired')
             return redirect(url_for('index'))
 
         sentence = Sentence.query.filter_by(sentence_id=task.sentence_id).first()
@@ -79,7 +80,7 @@ def perform_task(task_id):
             sentences=sentencesList,
             options = [e.value for e in CredibilityRates],
             sentence=sentence,
-            keywords=(',').join(['keywords1', 'keywords2', 'keywords3']) #TODO skad pobierac slowa kluczowe ?
+            keywords=['keywords1', 'keywords2', 'keywords3'] #TODO skad pobierac slowa kluczowe ?
         )
     if request.method == 'POST':
         time_start = request.form['time_start']
