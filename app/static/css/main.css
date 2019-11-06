@@ -33,3 +33,47 @@
     padding-bottom: 20px;
     text-align: center;
 }
+
+.home-container {
+    width: 50%;
+    max-width: 800px;
+}
+
+.home-container table {
+    width: 100%;
+}
+
+.rate_items {
+    margin: 10px 0;
+    margin: 10px auto;
+    width: 200px;
+}
+
+.rate_items > * {
+    display: block;
+    margin: 10px 0;
+}
+
+.rate_items label:first-child {
+    color: #00c853;
+}
+
+.rate_items label:nth-child(2) {
+    color: #d50000;
+}
+
+.info-bar {
+    padding: 20px;
+    text-align: center;
+}
+
+.keywords {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 0;
+}
+
+.keywords .mdl-chip {
+    margin-left: 5px;
+}

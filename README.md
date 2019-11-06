@@ -1,5 +1,10 @@
 # med_credibility_surveys
 
+## Dane do logowania
+
+login: test
+haslo: test
+
 ## TODO:
 * skrypt ładujący artykuł:
   * dzielenie artykułu na zdania

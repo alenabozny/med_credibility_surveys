@@ -1,5 +1,42 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>HI!</h1>
+    <div class="home-container">
+        {%  if nextTask %}
+            <a href="{{ url_for('perform_task', task_id = nextTask.task_id) }}" class="mdl-button mdl-js-button mdl-button--raised  mdl-button--accent">
+                Evaluate next sentence
+            </a>
+        {% endif %}
+
+        <h4>Your evaluations ({{ tasks.__len__() }}): </h4>
+
+        <table class="mdl-data-table mdl-data-table--selectable mdl-shadow--2dp taks-table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Rate</th>
+                </tr>
+            </thead>
+            {% for task in tasks %}
+                <tr>
+                    <td>
+                        {% if task.time_end %}
+                            {{ task.time_end }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {{ task.rate.value }}
+                    </td>
+                    <td>
+                        {% if not task.time_end %}
+                            <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" href="task/{{task.task_id}}">
+                                Start
+                            </a>
+                        {% endif %}
+
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
 {% endblock %}
