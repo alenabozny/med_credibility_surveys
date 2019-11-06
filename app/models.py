@@ -32,6 +32,7 @@ class Article(db.Model):
     url = db.Column(db.String(150))
     title = db.Column(db.String(150))
     query = db.Column(db.String(100))
+    keywords = db.Column(db.String(200))
 
     def __repr__(self):
         return '<Article "{}".'.format(self.title)
@@ -43,6 +44,39 @@ class Sentence(db.Model):
     article_id = db.Column(db.Integer, db.ForeignKey('article.article_id'))
     sequence_nr = db.Column(db.Integer) # position in the article
     to_evaluate = db.Column(db.Boolean)
+
+    def handle_nonexistent(func):
+        def wrapper(*args, **kwargs):
+            try:
+                return func(*args, **kwargs)
+            except AttributeError:
+                return ""
+
+        return wrapper
+
+    @handle_nonexistent
+    def get_left_context(self, iterator):
+        return Sentence.query.filter_by(sequence_nr=self.sequence_nr - iterator).first().body
+
+    @handle_nonexistent
+    def get_right_context(self, iterator):
+        return Sentence.query.filter_by(sequence_nr=self.sequence_nr + iterator).first().body
+
+    def get_context_sentences(self):
+        sents = Sentence.query.filter_by(article_id=self.article_id)
+        seq_nr = self.sequence_nr
+        left_length = len(sents[:seq_nr-1])
+        right_length = len(sents[seq_nr:])
+        len_range = left_length if left_length > right_length else right_length
+        context_dict = {}
+
+        for i in range(1, len_range+1):
+            left_context = self.get_left_context(i)
+            right_context = self.get_right_context(i)
+
+            context_dict[i] = {'left': left_context, 'right': right_context}
+
+        return context_dict
 
     def __repr__(self):
         return '<Sentence "{}" from article {}.>'.format(self.body, self.article_id)
