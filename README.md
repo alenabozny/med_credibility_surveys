@@ -19,11 +19,14 @@ haslo: test
 * Widok edycji Tasku -- FRONTEND:
    * [x] Endpoint zwracający dane
   * [x] zliczanie czasu edycji tasku
-  * [x] wysyłka formularza z wynikami oceny i wszystkimi metrykami
+  * [x] wysyłka formularza z wynikami oceny i wszystkimi metrykami (w tym tagi)
   * [ ] poprawny odczyt prawego i lewego kontekstu
+  * [ ] wyświetlanie tagów po wyborze "noncredible"
 * [x] Lista tasków na stronie użytkownika
   * [x] Endpoint zwracający dane
   * [x] Widok @kwarpechowski
+* ADMINKA
+  * [ ] Przypisywanie tasków dotyczących zdań z wybranego artykułu do Usera
 
 
   
