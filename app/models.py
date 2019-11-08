@@ -8,6 +8,9 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
     password_hash = db.Column(db.String(128))
+    is_admin = db.Column(db.Boolean, default=False)
+
+    tasks = db.relationship('Task', backref='user')
 
     @property
     def is_authenticated(self):
@@ -34,6 +37,8 @@ class Article(db.Model):
     query = db.Column(db.String(100))
     keywords = db.Column(db.String(200))
 
+    sentences = db.relationship('Sentence', backref='article')
+
     def __repr__(self):
         return '<Article "{}".'.format(self.title)
 
@@ -44,6 +49,8 @@ class Sentence(db.Model):
     article_id = db.Column(db.Integer, db.ForeignKey('article.article_id'))
     sequence_nr = db.Column(db.Integer) # position in the article
     to_evaluate = db.Column(db.Boolean)
+
+    tasks = db.relationship('Task', backref='sentence')
 
     def handle_nonexistent(func):
         def wrapper(*args, **kwargs):
@@ -94,3 +101,4 @@ class Task(db.Model):
     time_start = db.Column(db.DateTime)
     time_end = db.Column(db.DateTime)
     rate = db.Column(db.Enum(CredibilityRates))
+    steps = db.Column(db.Integer)

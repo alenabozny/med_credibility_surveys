@@ -3,6 +3,7 @@
 {% block js %}
     <script>
         const sentences = {{ sentences |tojson }};
+        const initSentence = "{{ sentence.body }}";
     </script>
     <script defer src="{{ url_for('static', filename='js/task.js') }}"></script>
 {% endblock %}
@@ -29,8 +30,7 @@
                     </div>
                 {% endif %}
 
-                <div class="mdl-card__supporting-text">
-                    {{ sentence.body }}
+                <div class="mdl-card__supporting-text" id="sentenceBody">
                 </div>
 
                 <div class="rate_items">
@@ -59,6 +59,7 @@
         </div>
         <input type="hidden" name="time_start" />
         <input type="hidden" name="time_end" />
+        <input type="hidden" name="steps" value="1"/>
         <div class="task-button">
             <button disabled type="submit" id="save" class="mdl-button mdl-button--raised mdl-button--accent">
                 Save

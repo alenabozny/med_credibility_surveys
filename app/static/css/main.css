@@ -77,3 +77,11 @@
 .keywords .mdl-chip {
     margin-left: 5px;
 }
+
+.admin-user-table {
+    width: 100%;
+}
+
+.main-sentence {
+    font-weight: bold;
+}

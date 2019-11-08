@@ -15,6 +15,7 @@
                 <tr>
                     <th>Date</th>
                     <th>Rate</th>
+                    <th>Steps</th>
                 </tr>
             </thead>
             {% for task in tasks %}
@@ -34,6 +35,9 @@
                             </a>
                         {% endif %}
 
+                    </td>
+                    <td>
+                        {{ task.steps }}
                     </td>
                 </tr>
             {% endfor %}

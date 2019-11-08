@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div>
+    <h4>User data</h4>
+    <table class="mdl-data-table mdl-data-table--selectable mdl-shadow--2dp admin-user-table">
+        <tbody>
+            <tr>
+                <td>Id</td>
+                <td>{{ user.id }}</td>
+            </tr>
+            <tr>
+                <td>username</td>
+                <td>{{ user.username }}</td>
+            </tr>
+            <tr>
+                <td>email</td>
+                <td>{{ user.email }}</td>
+            </tr>
+            <tr>
+                <td>is_admin</td>
+                <td>{{ user.is_admin }}</td>
+            </tr>
+        </tbody>
+    </table>
+    {%  if user.tasks.__len__() > 0 %}
+        <h4>Tasks ({{ user.tasks.__len__() }})</h4>
+        <table class="mdl-data-table mdl-data-table--selectable mdl-shadow--2dp admin-user-table">
+            <thead>
+            <th>task_id</th>
+            <th>time_start</th>
+            <th>time_end</th>
+            <th>rate</th>
+            <th>steps</th>
+            </thead>
+            <tbody>
+            {% for task in user.tasks %}
+                <tr>
+                    <td>{{ task.task_id }}</td>
+                    <td>{{ task.time_start }}</td>
+                    <td>{{ task.time_end}}</td>
+                    <td>{{ task.rate}}</td>
+                    <td>{{ task.steps}}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+    <h4>Change password</h4>
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <div class="mdl-card__supporting-text">
+            <div class="mdl-textfield mdl-js-textfield">
+                {{ form.password.label(class_="mdl-textfield__label") }}<br>
+                {{ form.password(size=32, class_="mdl-textfield__input") }}
+            </div>
+            <p>{{ form.submit(class_="mdl-button mdl-js-button mdl-button--raised mdl-button--colored") }}</p>
+        </div>
+    </form>
+</div>
+{% endblock %}
