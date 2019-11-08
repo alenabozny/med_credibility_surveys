@@ -7,6 +7,12 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import current_user, login_user, login_required, logout_user
 from datetime import datetime
 
+<<<<<<< HEAD
+=======
+TAGS = ['tag1', 'tag2', 'tag3']
+
+@app.route('/')
+>>>>>>> master
 
 @app.route('/')
 @app.route('/index')
@@ -70,10 +76,18 @@ def perform_task(task_id):
         return render_template(
             'example_task.html',
             title='Task',
+<<<<<<< HEAD
             sentences=task.sentence.get_context_sentences(),
             options=[e.value for e in CredibilityRates],
             sentence=task.sentence,
             keywords=task.sentence.article.keywords.split(', ')
+=======
+            sentences=sentencesList,
+            options = [e.value for e in CredibilityRates],
+            sentence=sentence,
+            keywords=['keywords1', 'keywords2', 'keywords3'],
+            tags = TAGS
+>>>>>>> master
         )
     if request.method == 'POST':
         time_start = request.form['time_start']
