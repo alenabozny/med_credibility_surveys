@@ -7,6 +7,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import current_user, login_user, login_required, logout_user
 from datetime import datetime
 
+TAGS = ['tag1', 'tag2', 'tag3']
+
 @app.route('/')
 
 @app.route('/index')
@@ -80,7 +82,8 @@ def perform_task(task_id):
             sentences=sentencesList,
             options = [e.value for e in CredibilityRates],
             sentence=sentence,
-            keywords=['keywords1', 'keywords2', 'keywords3'] #TODO skad pobierac slowa kluczowe ?
+            keywords=['keywords1', 'keywords2', 'keywords3'],
+            tags = TAGS
         )
     if request.method == 'POST':
         time_start = request.form['time_start']

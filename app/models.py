@@ -35,7 +35,7 @@ class Article(db.Model):
     keywords = db.Column(db.String(200))
 
     def __repr__(self):
-        return '<Article "{}".'.format(self.title)
+        return '<Article "{}">'.format(self.title)
 
 
 class Sentence(db.Model):
@@ -94,3 +94,4 @@ class Task(db.Model):
     time_start = db.Column(db.DateTime)
     time_end = db.Column(db.DateTime)
     rate = db.Column(db.Enum(CredibilityRates))
+    tags = db.Column(db.String(200))
