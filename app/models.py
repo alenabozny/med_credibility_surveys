@@ -101,8 +101,5 @@ class Task(db.Model):
     time_start = db.Column(db.DateTime)
     time_end = db.Column(db.DateTime)
     rate = db.Column(db.Enum(CredibilityRates))
-<<<<<<< HEAD
     steps = db.Column(db.Integer)
-=======
     tags = db.Column(db.String(200))
->>>>>>> master
