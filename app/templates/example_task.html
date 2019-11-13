@@ -46,6 +46,22 @@
                         </label>
                     {% endfor %}
                 </div>
+                <div id="tags" class="hide">
+                    <h4>Select reason</h4>
+                    <div>
+                        {% for tag in tags %}
+                            <label class="mdl-radio mdl-js-radio" for="{{tag}}">
+                                <input type="checkbox"
+                                       id="{{tag}}"
+                                       name="tag"
+                                       class="mdl-radio__button"
+                                       value="{{ tag }}"
+                                >
+                                <span class="mdl-radio__label">{{tag}}</span>
+                            </label>
+                        {%  endfor %}
+                    </div>
+                </div>
 
                 <div class="mdl-card__actions mdl-card--border task-buttons">
                     <button id="moreContext" class="mdl-button mdl-button--colored">

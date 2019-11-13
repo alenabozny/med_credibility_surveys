@@ -19,11 +19,17 @@ saveBtn.addEventListener('click', async () => {
     document.querySelector('[name="time_end"]').value = Date.now();
 });
 
-
+const tags = document.querySelector('#tags');
 const checkboxes = document.querySelectorAll('[name="rate"]');
 
 checkboxes.forEach(checkbox => {
-    checkbox.addEventListener('change', () => {
+    checkbox.addEventListener('change', (e) => {
+        if (e.target.id === 'noncredible') {
+            tags.classList.remove('hide');
+        } else {
+            tags.classList.add('hide');
+            tags.querySelectorAll('input').forEach(checkbox => checkbox.checked = false)
+        }
         saveBtn.removeAttribute('disabled');
     })
 });

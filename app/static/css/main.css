@@ -85,3 +85,33 @@
 .main-sentence {
     font-weight: bold;
 }
+
+.main-title {
+    color: #fff;
+    text-decoration: none;
+}
+
+#tags {
+    padding-bottom: 10px;
+}
+
+#tags div{
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+}
+
+#tags h4 {
+    padding: 10px 0 0 10px;
+    margin: 0;
+    border-top: 1px solid rgba(0,0,0,.1);
+    font-size: 1.2rem;
+}
+
+#tags.hide {
+    opacity: 0;
+}
+
+#tags .mdl-radio__label {
+    padding: 0 10px;
+}

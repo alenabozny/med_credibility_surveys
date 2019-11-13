@@ -34,7 +34,7 @@ class Article(db.Model):
     access_date = db.Column(db.Date, default=date.today())
     url = db.Column(db.String(150))
     title = db.Column(db.String(150))
-    query = db.Column(db.String(100))
+    queryTxt = db.Column(db.String(100))
     keywords = db.Column(db.String(200))
 
     sentences = db.relationship('Sentence', backref='article')

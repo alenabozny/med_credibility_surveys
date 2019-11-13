@@ -1,9 +1,9 @@
 from flask import render_template
 from flask import request, redirect, url_for, flash
 from app import app, db
-from app.forms import LoginForm, RegisterForm, ChangePasswordForm
+from app.forms import LoginForm
 from app.models import Task, User, CredibilityRates
-from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.security import check_password_hash
 from flask_login import current_user, login_user, login_required, logout_user
 from datetime import datetime
 
@@ -82,11 +82,13 @@ def perform_task(task_id):
         time_end = request.form['time_end']
         rate = request.form['rate']
         steps = request.form['steps']
+        tags = request.form.getlist('tag')
 
         task = Task.query.filter_by(task_id=task_id, user_id=current_user.id).first()
         task.time_start = datetime.fromtimestamp(int(time_start) / 1000)
         task.time_end = datetime.fromtimestamp(int(time_end) / 1000)
         task.rate = CredibilityRates(rate)
+        task.tags = ','.join(tags)
         task.steps = int(steps)
 
         db.session.commit()
@@ -101,78 +103,3 @@ def perform_task(task_id):
         else:
             flash('Thanks. You do not have any pending tasks')
             return redirect(url_for('index'))
-
-
-@app.route('/admin', methods=['GET', 'POST'])
-@login_required
-def admin():
-    if not current_user.is_admin:
-        return redirect("/")
-
-    form = RegisterForm(request.form)
-
-    if request.method == 'POST':
-        if form.validate():
-            username = request.form['username']
-            email = request.form['email']
-            password = generate_password_hash(request.form['password'])
-
-            user = User(username=username, email=email, password_hash=password)
-            db.session.add(user)
-            db.session.commit()
-            flash('User was added')
-        else:
-            flash('bad form data')
-
-    users = User.query.outerjoin(Task).all()
-
-    return render_template('admin.html', title='Admin', users=users, form=form)
-
-
-@app.route('/admin/remove/<int:user_id>')
-@login_required
-def remove_user(user_id):
-    if not current_user.is_admin:
-        return redirect("/")
-
-    user = User.query.filter_by(id=user_id).first()
-    db.session.delete(user)
-    db.session.commit()
-    flash('User was deleted')
-    return redirect(url_for('admin'))
-
-
-@app.route('/admin/toggle_admin/<int:user_id>')
-@login_required
-def toggle_admin(user_id):
-    if not current_user.is_admin:
-        return redirect("/")
-
-    user = User.query.filter_by(id=user_id).first()
-    user.is_admin = not user.is_admin
-    db.session.commit()
-    flash('Admin role chaned')
-    return redirect(url_for('admin'))
-
-
-@app.route('/admin/user/<int:user_id>', methods=['GET', 'POST'])
-@login_required
-def user_details(user_id):
-    if not current_user.is_admin:
-        return redirect("/")
-
-    form = ChangePasswordForm(request.form)
-    user = User.query.filter_by(id=user_id).outerjoin(Task).first()
-
-    if not user:
-        flash('User not found')
-        return redirect(url_for('admin'))
-
-    if request.method == 'POST':
-        if form.validate():
-            password = generate_password_hash(request.form['password'])
-            user.password_hash = password
-            db.session.commit()
-            flash('Password changed')
-
-    return render_template('user_admin.html', title=user.username, user=user, form=form)

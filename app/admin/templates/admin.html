@@ -46,9 +46,9 @@
                             {% endif %}
                         </td>
                         <td>
-                            <a href="{{ url_for('remove_user', user_id=user.id) }}">Remove user</a>
+                            <a href="{{ url_for('admin.remove_user', user_id=user.id) }}">Remove user</a>
 
-                            <a href="{{ url_for('toggle_admin', user_id=user.id) }}">
+                            <a href="{{ url_for('admin.toggle_admin', user_id=user.id) }}">
                                 {% if(user.is_admin) %}
                                     Remove admin
                                 {%  else  %}
@@ -56,7 +56,7 @@
                                 {% endif %}
                             </a>
 
-                            <a href="{{ url_for('user_details', user_id=user.id) }}">Details</a>
+                            <a href="{{ url_for('admin.user_details', user_id=user.id) }}">Details</a>
                         </td>
                     </tr>
                 {% endfor %}

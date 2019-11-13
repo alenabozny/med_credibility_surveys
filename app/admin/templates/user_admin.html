@@ -23,6 +23,16 @@
             </tr>
         </tbody>
     </table>
+    <h4>Add tasks</h4>
+    <form action="{{ url_for('admin.add_tasks', user_id=user.id) }}" method="post" novalidate>
+        {{ taskForm.hidden_tag() }}
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            {{ taskForm.article.label(class_="mdl-textfield__label") }}<br>
+            {{ taskForm.article(class_="mdl-textfield__input") }}
+        </div>
+        <p>{{ taskForm.submit(class_="mdl-button mdl-js-button mdl-button--raised mdl-button--colored") }}</p>
+    </form>
+
     {%  if user.tasks.__len__() > 0 %}
         <h4>Tasks ({{ user.tasks.__len__() }})</h4>
         <table class="mdl-data-table mdl-data-table--selectable mdl-shadow--2dp admin-user-table">
@@ -32,6 +42,8 @@
             <th>time_end</th>
             <th>rate</th>
             <th>steps</th>
+            <th>tags</th>
+            <th></th>
             </thead>
             <tbody>
             {% for task in user.tasks %}
@@ -41,13 +53,20 @@
                     <td>{{ task.time_end}}</td>
                     <td>{{ task.rate}}</td>
                     <td>{{ task.steps}}</td>
+                    <td>{{ task.tags}}</td>
+                    <td>
+                       {% if(task.rate) %}
+                           <a href="{{ url_for('admin.clear_task', user_id=user.id, task_id=task.task_id) }}">Clear</a>
+                        {% endif %}
+                        <a href="{{ url_for('admin.remove_task', user_id=user.id, task_id=task.task_id) }}">Remove</a>
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
     {% endif %}
     <h4>Change password</h4>
-    <form action="" method="post" novalidate>
+    <form action="{{ url_for('admin.change_password', user_id=user.id) }}" method="post" novalidate>
         {{ form.hidden_tag() }}
         <div class="mdl-card__supporting-text">
             <div class="mdl-textfield mdl-js-textfield">
