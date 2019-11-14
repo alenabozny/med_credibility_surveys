@@ -9,7 +9,6 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(120), index=True, unique=True)
     password_hash = db.Column(db.String(128))
     is_admin = db.Column(db.Boolean, default=False)
-
     tasks = db.relationship('Task', backref='user')
 
     @property
@@ -36,11 +35,20 @@ class Article(db.Model):
     title = db.Column(db.String(150))
     queryTxt = db.Column(db.String(100))
     keywords = db.Column(db.String(200))
-
     sentences = db.relationship('Sentence', backref='article')
 
     def __repr__(self):
         return '<Article "{}">'.format(self.title)
+
+# decorator for the class function
+def handle_nonexistent(func):
+    def wrapper(*args, **kwargs):
+        try:
+            return func(*args, **kwargs)
+        except AttributeError:
+            return ""
+
+    return wrapper
 
 
 class Sentence(db.Model):
@@ -49,17 +57,9 @@ class Sentence(db.Model):
     article_id = db.Column(db.Integer, db.ForeignKey('article.article_id'))
     sequence_nr = db.Column(db.Integer) # position in the article
     to_evaluate = db.Column(db.Boolean)
+    task = db.relationship('Task', backref='sentence')
 
     tasks = db.relationship('Task', backref='sentence')
-
-    def handle_nonexistent(func):
-        def wrapper(*args, **kwargs):
-            try:
-                return func(*args, **kwargs)
-            except AttributeError:
-                return ""
-
-        return wrapper
 
     @handle_nonexistent
     def get_left_context(self, iterator):
