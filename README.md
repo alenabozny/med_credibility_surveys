@@ -7,10 +7,10 @@ haslo: test
 
 ## TODO:
 * skrypt ładujący artykuł:
-  [x] dzielenie artykułu na zdania
-  [x] dodawanie artykuły do bazy
-  [x] dodawanie zdań i powiązanych z nimi Tasków (Triggerem) do bazy
-  [ ] obliczanie i dodawanie słów kluczowych
+  * [x] dzielenie artykułu na zdania
+  * [x] dodawanie artykuły do bazy
+  * [x] dodawanie zdań i powiązanych z nimi Tasków (Triggerem) do bazy
+  * [ ] obliczanie i dodawanie słów kluczowych
 * Widok edycji Tasku
 -- BACKEND:
   * [x] Zapewnienie, że raz edytowany, nie będzie mógł być edytowany po raz kolejny
