@@ -7,17 +7,17 @@ haslo: test
 
 ## TODO:
 * skrypt ładujący artykuł:
-  * dzielenie artykułu na zdania
-  * dodawanie artykuły do bazy
-  * dodawanie zdań i powiązanych z nimi Tasków (Triggerem) do bazy
+  [x] dzielenie artykułu na zdania
+  [x] dodawanie artykuły do bazy
+  [x] dodawanie zdań i powiązanych z nimi Tasków (Triggerem) do bazy
 * Widok edycji Tasku
 -- BACKEND:
   * [x] Zapewnienie, że raz edytowany, nie będzie mógł być edytowany po raz kolejny
   * [x] Ograniczenie dostępu do tasków tylko powiązanym użytkownikom
   * [x] Aktualizacja tasku na podstawie forumlarza przekazywanego pod koniec edycji
-  * [ ] funkcja uzyskiwania prawego i lewego kontekstu z indeksami "bliskości"
+  * [x] funkcja uzyskiwania prawego i lewego kontekstu z indeksami "bliskości"
 * Widok edycji Tasku -- FRONTEND:
-   * [x] Endpoint zwracający dane
+  * [x] Endpoint zwracający dane
   * [x] zliczanie czasu edycji tasku
   * [x] wysyłka formularza z wynikami oceny i wszystkimi metrykami (w tym tagi)
   * [x] poprawny odczyt prawego i lewego kontekstu
