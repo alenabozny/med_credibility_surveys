@@ -7,9 +7,10 @@ haslo: test
 
 ## TODO:
 * skrypt ładujący artykuł:
-  [x] dzielenie artykułu na zdania
-  [x] dodawanie artykuły do bazy
-  [x] dodawanie zdań i powiązanych z nimi Tasków (Triggerem) do bazy
+  * [x] dzielenie artykułu na zdania
+  * [x] dodawanie artykuły do bazy
+  * [x] dodawanie zdań i powiązanych z nimi Tasków (Triggerem) do bazy
+  * [ ] obliczanie i dodawanie słów kluczowych
 * Widok edycji Tasku
 -- BACKEND:
   * [x] Zapewnienie, że raz edytowany, nie będzie mógł być edytowany po raz kolejny
@@ -27,7 +28,9 @@ haslo: test
   * [x] Widok @kwarpechowski
 * ADMINKA
   * [x] Przypisywanie tasków dotyczących zdań z wybranego artykułu do Usera
-
+* KOSMETYKA
+  * [ ] dodać instrukcję
+  * [ ] dodać tagi
 
   
 🔥 - pilne
