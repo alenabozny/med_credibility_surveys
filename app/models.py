@@ -59,8 +59,6 @@ class Sentence(db.Model):
     to_evaluate = db.Column(db.Boolean)
     task = db.relationship('Task', backref='sentence')
 
-    tasks = db.relationship('Task', backref='sentence')
-
     @handle_nonexistent
     def get_left_context(self, iterator):
         return Sentence.query.filter_by(sequence_nr=self.sequence_nr - iterator).first().body
