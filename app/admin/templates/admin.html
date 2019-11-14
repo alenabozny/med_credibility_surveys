@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div id="admin">
+        <h4>New user</h4>
+        <form action="" method="post" novalidate autocomplete="off">
+            {{ form.hidden_tag() }}
+            <div class="mdl-textfield mdl-js-textfield">
+                {{ form.username.label(class_="mdl-textfield__label") }}<br>
+                {{ form.username(size=32, class_="mdl-textfield__input") }}
+            </div>
+            <div class="mdl-textfield mdl-js-textfield">
+                {{ form.email.label(class_="mdl-textfield__label") }}<br>
+                {{ form.email(size=32, type="email", class_="mdl-textfield__input") }}
+            </div>
+            <div class="mdl-textfield mdl-js-textfield">
+                {{ form.password.label(class_="mdl-textfield__label") }}<br>
+                {{ form.password(size=32, class_="mdl-textfield__input") }}
+            </div>
+            {{ form.submit(class_="mdl-button mdl-js-button mdl-button--raised mdl-button--colored") }}
+        </form>
+        <h4>Users</h4>
+        <table class="mdl-data-table mdl-data-table--selectable mdl-shadow--2dp admin-user-table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Tasks</th>
+                <th>Admin</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.username }}</td>
+                        <td><a href="mailto:{{ user.email }}">{{ user.email }}</a></td>
+                        <td>{{ user.tasks.__len__()  }}</td>
+                        <td>
+                            {% if(user.is_admin) %}
+                                <input type="checkbox" class="mdl-checkbox__input" checked disabled/>
+                            {%  else  %}
+                                <input type="checkbox" class="mdl-checkbox__input" disabled />
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{{ url_for('admin.remove_user', user_id=user.id) }}">Remove user</a>
+
+                            <a href="{{ url_for('admin.toggle_admin', user_id=user.id) }}">
+                                {% if(user.is_admin) %}
+                                    Remove admin
+                                {%  else  %}
+                                    Add admin
+                                {% endif %}
+                            </a>
+
+                            <a href="{{ url_for('admin.user_details', user_id=user.id) }}">Details</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

@@ -8,6 +8,7 @@ app = Flask(__name__)
 app.secret_key = 'super secret string'
 app.config.from_object(Config)
 app.static_folder = 'static'
+
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 login_manager = LoginManager()
@@ -18,5 +19,8 @@ login_manager.login_view = 'login'
 @login_manager.user_loader
 def load_user(user_id):
     return models.User.query.get(user_id)
+
+from app.admin import bp_admin
+app.register_blueprint(bp_admin)
 
 from app import routes, models

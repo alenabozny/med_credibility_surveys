@@ -14,7 +14,7 @@
         <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
             <header class="mdl-layout__header">
                 <div class="mdl-layout__header-row">
-                    <span class="mdl-layout-title">Credibility of the medical web content</span>
+                    <a class="main-title" href="{{ url_for("index") }}" class="mdl-layout-title">Credibility of the medical web content</a>
                     <div class="mdl-layout-spacer"></div>
                     <nav class="mdl-navigation mdl-layout--large-screen-only">
                         {% if current_user.is_authenticated %}
@@ -22,6 +22,11 @@
                             <a class="mdl-navigation__link" href="{{ url_for('logout') }}">
                                 Log out
                             </a>
+                            {% if current_user.is_admin %}
+                                <a class="mdl-navigation__link" href="{{ url_for('admin.admin') }}">
+                                    Admin
+                                </a>
+                            {%  endif %}
                         {% endif %}
                     </nav>
                 </div>

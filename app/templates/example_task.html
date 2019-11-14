@@ -3,6 +3,7 @@
 {% block js %}
     <script>
         const sentences = {{ sentences |tojson }};
+        const initSentence = "{{ sentence.body }}";
     </script>
     <script defer src="{{ url_for('static', filename='js/task.js') }}"></script>
 {% endblock %}
@@ -29,8 +30,7 @@
                     </div>
                 {% endif %}
 
-                <div class="mdl-card__supporting-text">
-                    {{ sentence.body }}
+                <div class="mdl-card__supporting-text" id="sentenceBody">
                 </div>
 
                 <div class="rate_items">
@@ -46,6 +46,22 @@
                         </label>
                     {% endfor %}
                 </div>
+                <div id="tags" class="hide">
+                    <h4>Select reason</h4>
+                    <div>
+                        {% for tag in tags %}
+                            <label class="mdl-radio mdl-js-radio" for="{{tag}}">
+                                <input type="checkbox"
+                                       id="{{tag}}"
+                                       name="tag"
+                                       class="mdl-radio__button"
+                                       value="{{ tag }}"
+                                >
+                                <span class="mdl-radio__label">{{tag}}</span>
+                            </label>
+                        {%  endfor %}
+                    </div>
+                </div>
 
                 <div class="mdl-card__actions mdl-card--border task-buttons">
                     <button id="moreContext" class="mdl-button mdl-button--colored">
@@ -59,6 +75,7 @@
         </div>
         <input type="hidden" name="time_start" />
         <input type="hidden" name="time_end" />
+        <input type="hidden" name="steps" value="1"/>
         <div class="task-button">
             <button disabled type="submit" id="save" class="mdl-button mdl-button--raised mdl-button--accent">
                 Save
