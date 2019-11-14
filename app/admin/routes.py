@@ -101,12 +101,11 @@ def add_tasks(user_id):
 
     article_id = request.form['article']
 
-    sentences = Sentence.query.filter_by(article_id=article_id, sequence_nr=1).all()
+    sentences = Sentence.query.filter_by(article_id=article_id).all()
 
     for sentence in sentences:
         try:
-            task = Task(user_id=user_id, sentence_id=sentence.sentence_id)
-            db.session.add(task)
+            sentence.task[0].user_id = user_id
             db.session.commit()
         except:
             flash('Task is alerdy added')

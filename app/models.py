@@ -61,11 +61,17 @@ class Sentence(db.Model):
 
     @handle_nonexistent
     def get_left_context(self, iterator):
-        return Sentence.query.filter_by(sequence_nr=self.sequence_nr - iterator).first().body
+        return Sentence.query.filter_by(
+                sequence_nr=self.sequence_nr - iterator,
+                article_id=self.article_id)\
+            .first().body
 
     @handle_nonexistent
     def get_right_context(self, iterator):
-        return Sentence.query.filter_by(sequence_nr=self.sequence_nr + iterator).first().body
+        return Sentence.query.filter_by(
+                sequence_nr=self.sequence_nr + iterator,
+                article_id=self.article_id)\
+            .first().body
 
     def get_context_sentences(self):
         sents = Sentence.query.filter_by(article_id=self.article_id)
@@ -101,3 +107,6 @@ class Task(db.Model):
     rate = db.Column(db.Enum(CredibilityRates))
     steps = db.Column(db.Integer)
     tags = db.Column(db.String(200))
+
+    def __repr__(self):
+        return '<Task for sentence "{}" from article {}.>'.format(self.sentence.body, self.sentence.article_id)

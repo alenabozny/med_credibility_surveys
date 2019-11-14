@@ -68,13 +68,18 @@ def perform_task(task_id):
             flash('Your task was expired')
             return redirect(url_for('index'))
 
+        try:
+            keywords = task.sentence.article.keywords.split(', ')
+        except AttributeError:
+            keywords = ""
+
         return render_template(
             'example_task.html',
             title='Task',
             sentences=task.sentence.get_context_sentences(),
             options=[e.value for e in CredibilityRates],
             sentence=task.sentence,
-            keywords=task.sentence.article.keywords.split(', '),
+            keywords=keywords,
             tags=TAGS
         )
     if request.method == 'POST':
