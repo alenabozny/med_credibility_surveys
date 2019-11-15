@@ -151,6 +151,7 @@ def clear_task(user_id, task_id):
     task.time_end = null()
     task.time_start = null()
     task.steps = null()
+    task.reason = null()
     db.session.commit()
 
     return redirect(url_for('admin.user_details', user_id=user_id))

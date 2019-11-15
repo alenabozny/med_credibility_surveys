@@ -92,7 +92,7 @@
 }
 
 #tags {
-    padding-bottom: 10px;
+    padding: 0 10px 10px 10px;
 }
 
 #tags div{
@@ -102,16 +102,27 @@
 }
 
 #tags h4 {
-    padding: 10px 0 0 10px;
+    padding: 10px 0 0 0;
     margin: 0;
     border-top: 1px solid rgba(0,0,0,.1);
     font-size: 1.2rem;
 }
 
+#tags textarea {
+    box-sizing: border-box;
+    margin-top: 10px;
+    border: 1px solid rgba(0,0,0,.1);
+    padding: 10px;
+}
+
 #tags.hide {
-    opacity: 0;
+    display: none;
 }
 
 #tags .mdl-radio__label {
     padding: 0 10px;
+}
+
+#sentenceBody {
+    color: #000;
 }

@@ -74,7 +74,7 @@ def perform_task(task_id):
             keywords = ""
 
         return render_template(
-            'example_task.html',
+            'task.html',
             title='Task',
             sentences=task.sentence.get_context_sentences(),
             options=[e.value for e in CredibilityRates],
@@ -88,6 +88,7 @@ def perform_task(task_id):
         rate = request.form['rate']
         steps = request.form['steps']
         tags = request.form.getlist('tag')
+        reason = request.form['reason']
 
         task = Task.query.filter_by(task_id=task_id, user_id=current_user.id).first()
         task.time_start = datetime.fromtimestamp(int(time_start) / 1000)
@@ -95,6 +96,7 @@ def perform_task(task_id):
         task.rate = CredibilityRates(rate)
         task.tags = ','.join(tags)
         task.steps = int(steps)
+        task.reason = reason
 
         db.session.commit()
 
