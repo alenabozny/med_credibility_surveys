@@ -6,8 +6,10 @@ from app.models import Task, User, CredibilityRates
 from werkzeug.security import check_password_hash
 from flask_login import current_user, login_user, login_required, logout_user
 from datetime import datetime
+from sqlalchemy import func
 
 TAGS = ['tag1', 'tag2', 'tag3']
+
 
 @app.route('/')
 @app.route('/index')
@@ -15,7 +17,7 @@ TAGS = ['tag1', 'tag2', 'tag3']
 def index():
     tasks = Task.query.filter_by(
         user_id=current_user.id
-    ).filter(Task.rate != None).all()
+    ).filter(Task.rate is not None).all()
 
     nextTask = Task.query.filter_by(
         user_id=current_user.id,
@@ -103,7 +105,7 @@ def perform_task(task_id):
         nextTask = Task.query.filter_by(
             user_id=current_user.id,
             rate=None
-        ).first()
+        ).order_by(func.random()).first()
 
         if nextTask:
             return redirect(url_for('perform_task', task_id=nextTask.task_id))
