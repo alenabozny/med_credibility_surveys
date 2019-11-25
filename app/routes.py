@@ -17,7 +17,9 @@ TAGS = ['tag1', 'tag2', 'tag3']
 def index():
     tasks = Task.query.filter_by(
         user_id=current_user.id
-    ).filter(Task.rate is not None).all()
+    ).filter(Task.rate != None)\
+        .order_by(Task.time_end.desc())\
+        .all()
 
     nextTask = Task.query.filter_by(
         user_id=current_user.id,
@@ -48,7 +50,7 @@ def login():
             login_user(user, remember=remember)
             return redirect("/")
         else:
-            flash('Wrong username or password')
+            flash('Wrong username or password', 'error')
 
         return render_template('login.html', title='Sign In', form=form)
 
@@ -67,7 +69,7 @@ def perform_task(task_id):
         task = Task.query.filter_by(task_id=task_id, user_id=current_user.id).first()
 
         if task.time_end:
-            flash('Your task was expired')
+            flash('Your task was expired', 'error')
             return redirect(url_for('index'))
 
         try:
@@ -110,5 +112,16 @@ def perform_task(task_id):
         if nextTask:
             return redirect(url_for('perform_task', task_id=nextTask.task_id))
         else:
-            flash('Thanks. You do not have any pending tasks')
+            flash('Thanks. You do not have any pending tasks', 'success')
             return redirect(url_for('index'))
+
+
+@app.errorhandler(404)
+def not_found_error(error):
+    return render_template('404.html'), 404
+
+
+@app.errorhandler(500)
+def internal_error(error):
+    db.session.rollback()
+    return render_template('500.html'), 500

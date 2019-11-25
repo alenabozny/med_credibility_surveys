@@ -32,13 +32,13 @@
                 </div>
             </header>
             <main class="mdl-layout__content">
-                {% with messages = get_flashed_messages() %}
+                {% with messages = get_flashed_messages(with_categories=true) %}
                     {% if messages %}
-                        <div class="mdl-color--pink-200 mdl-color-text--pink-900 mdl-shadow--4dp info-bar">
-                            {% for message in messages %}
-                                {{ message }}
+                            {% for category, message in messages %}
+                                <div class="mdl-shadow--2dp info-bar {{ category }}">
+                                    {{ message }}
+                                </div>
                             {% endfor %}
-                        </div>
                     {% endif %}
                 {% endwith %}
                 <div class="page-content">

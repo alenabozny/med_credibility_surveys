@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block js %}
+    <script defer src="{{ url_for('static', filename='js/admin.js') }}"></script>
+{% endblock %}
+
 {% block content %}
 <div>
     <h4>User data</h4>
@@ -38,6 +42,24 @@
             {{ taskForm.article.label(class_="mdl-textfield__label") }}<br>
             {{ taskForm.article(class_="mdl-textfield__input") }}
         </div>
+        <div class="sentences-buttons">
+            <button id="btnNone" class="mdl-button">None</button>
+            <button id="btnAll" class="mdl-button">All</button>
+            <button id="btnEvery2" class="mdl-button">Every 2</button>
+            <button id="btnEvery3" class="mdl-button">Every 3</button>
+        </div>
+        <table id="sentenceContainer" class="mdl-shadow--2dp">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Id</th>
+                    <th>Text</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
         <p>{{ taskForm.submit(class_="mdl-button mdl-js-button mdl-button--raised mdl-button--colored") }}</p>
     </form>
 

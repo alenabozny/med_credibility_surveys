@@ -68,6 +68,14 @@
     text-align: center;
 }
 
+.info-bar.success {
+    background: #8bc349;
+}
+
+.info-bar.error {
+    background: #f44336;
+}
+
 .keywords {
     display: flex;
     align-items: center;
@@ -127,4 +135,40 @@
 #sentenceBody p {
     color: #000;
     font-size: 16px;
+}
+
+#sentenceContainer {
+    width: 1000px;
+    table-layout: fixed;
+    border: 1px solid rgba(0,0,0,.12);
+}
+
+#sentenceContainer tr {
+    background: #fff;
+    cursor: pointer;
+}
+
+
+#sentenceContainer td {
+    word-wrap: break-word;
+    padding: 12px;
+    border: 0;
+    text-align: center;
+}
+
+#sentenceContainer td:last-child {
+    text-align: left;
+}
+
+#sentenceContainer th:first-child {
+    width: 40px;
+}
+
+#sentenceContainer th:nth-child(2){
+    width: 80px;
+}
+
+.sentences-buttons {
+    text-align: center;
+    margin-bottom: 10px;
 }
