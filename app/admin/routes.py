@@ -3,17 +3,27 @@ from flask import request, redirect, flash
 from sqlalchemy import null
 from app import db
 from app.admin import bp_admin
-from app.admin.forms import UserTaskForm, ChangePasswordForm
-from app.forms import RegisterForm
+from app.admin.forms import UserTaskForm, ChangePasswordForm, RegisterForm
 from app.models import Task, User, Article, Sentence
 from werkzeug.security import generate_password_hash
 from flask_login import current_user, login_required
 
 
 @bp_admin.route('/')
-@bp_admin.route('/index', methods=['GET', 'POST'])
+@bp_admin.route('/index')
 @login_required
 def admin():
+    if not current_user.is_admin:
+        return redirect("/")
+
+    users = User.query.outerjoin(Task).all()
+
+    return render_template('admin.html', title='Admin', users=users)
+
+
+@bp_admin.route('/user_add', methods=['GET', 'POST'])
+@login_required
+def user_add():
     if not current_user.is_admin:
         return redirect("/")
 
@@ -24,17 +34,17 @@ def admin():
             username = request.form['username']
             email = request.form['email']
             password = generate_password_hash(request.form['password'])
+            name = request.form['name']
+            surname = request.form['surname']
 
-            user = User(username=username, email=email, password_hash=password)
+            user = User(username=username, email=email, password_hash=password, name=name, surname=surname)
             db.session.add(user)
             db.session.commit()
             flash('User was added')
         else:
             flash('bad form data')
 
-    users = User.query.outerjoin(Task).all()
-
-    return render_template('admin.html', title='Admin', users=users, form=form)
+    return render_template('user_add.html', form=form)
 
 
 @bp_admin.route('/user/<int:user_id>', methods=['GET', 'POST'])
@@ -105,11 +115,14 @@ def add_tasks(user_id):
 
     for sentence in sentences:
         try:
-            sentence.task[0].user_id = user_id
-            db.session.commit()
+            task = Task(
+                sentence_id=sentence.sentence_id,
+                user_id=user_id
+            )
+            db.session.add(task)
         except:
             flash('Task is alerdy added')
-
+    db.session.commit()
     return redirect(url_for('admin.user_details', user_id=user_id))
 
 
@@ -151,9 +164,11 @@ def clear_task(user_id, task_id):
     task.time_end = null()
     task.time_start = null()
     task.steps = null()
+    task.reason = null()
     db.session.commit()
 
     return redirect(url_for('admin.user_details', user_id=user_id))
+
 
 @bp_admin.route('/user/<int:user_id>/removeTask/<int:task_id>')
 @login_required

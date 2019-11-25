@@ -6,8 +6,10 @@ from app.models import Task, User, CredibilityRates
 from werkzeug.security import check_password_hash
 from flask_login import current_user, login_user, login_required, logout_user
 from datetime import datetime
+from sqlalchemy import func
 
 TAGS = ['tag1', 'tag2', 'tag3']
+
 
 @app.route('/')
 @app.route('/index')
@@ -15,7 +17,7 @@ TAGS = ['tag1', 'tag2', 'tag3']
 def index():
     tasks = Task.query.filter_by(
         user_id=current_user.id
-    ).filter(Task.rate != None).all()
+    ).filter(Task.rate is not None).all()
 
     nextTask = Task.query.filter_by(
         user_id=current_user.id,
@@ -74,7 +76,7 @@ def perform_task(task_id):
             keywords = ""
 
         return render_template(
-            'example_task.html',
+            'task.html',
             title='Task',
             sentences=task.sentence.get_context_sentences(),
             options=[e.value for e in CredibilityRates],
@@ -88,6 +90,7 @@ def perform_task(task_id):
         rate = request.form['rate']
         steps = request.form['steps']
         tags = request.form.getlist('tag')
+        reason = request.form['reason']
 
         task = Task.query.filter_by(task_id=task_id, user_id=current_user.id).first()
         task.time_start = datetime.fromtimestamp(int(time_start) / 1000)
@@ -95,13 +98,14 @@ def perform_task(task_id):
         task.rate = CredibilityRates(rate)
         task.tags = ','.join(tags)
         task.steps = int(steps)
+        task.reason = reason
 
         db.session.commit()
 
         nextTask = Task.query.filter_by(
             user_id=current_user.id,
             rate=None
-        ).first()
+        ).order_by(func.random()).first()
 
         if nextTask:
             return redirect(url_for('perform_task', task_id=nextTask.task_id))

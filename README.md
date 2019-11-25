@@ -25,14 +25,17 @@ haslo: test
   * [x] wyświetlanie tagów po wyborze "noncredible"
 * [x] Lista tasków na stronie użytkownika
   * [x] Endpoint zwracający dane
-  * [x] Widok @kwarpechowski
+  * [x] Widok
 * ADMINKA
   * [x] Przypisywanie tasków dotyczących zdań z wybranego artykułu do Usera
 * KOSMETYKA
   * [ ] dodać instrukcję
   * [ ] dodać tagi
-
-  
-🔥 - pilne
-
-🚧 - w trakcie
+* Poprawki
+    * [x] - przyciski back/save na dole  
+    * [x] - przypisywanie tylko pustych taskow z danego artykułu
+    * [ ] - wybieranie, ktore zdania (co drugie, co trzecie)
+    * [x] - kolejne taski losowe, nie kolejne
+    * [x] - imie/nazwisko usera
+    * [x] - usunac usuwanie usera
+    * [ ] - wzytywanie daty (funkcja) - ISO,  yyyy-mm-dd,  dd-mm-yyyy

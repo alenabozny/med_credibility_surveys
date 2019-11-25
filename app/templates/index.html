@@ -16,28 +16,17 @@
                     <th>Date</th>
                     <th>Rate</th>
                     <th>Steps</th>
-                    <th></th>
                 </tr>
             </thead>
             {% for task in tasks %}
                 <tr>
                     <td>
-                        {% if task.time_end %}
-                            {{ task.time_end }}
-                        {% endif %}
+                        {{ task.time_end.strftime('%Y-%m-%d %H:%M:%S') if task.time_end }}
                     </td>
                     <td>
                         {{ task.rate.value }}
                     </td>
                     <td>{{ task.steps}}</td>
-                    <td>
-                        {% if not task.time_end %}
-                            <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" href="task/{{task.task_id}}">
-                                Start
-                            </a>
-                        {% endif %}
-
-                    </td>
                 </tr>
             {% endfor %}
         </table>
