@@ -57,3 +57,5 @@ target/
 
 # Articles
 articles/
+
+app.db

@@ -14,6 +14,14 @@
                 <td>{{ user.username }}</td>
             </tr>
             <tr>
+                <td>name</td>
+                <td>{{ user.name }}</td>
+            </tr>
+            <tr>
+                <td>surname</td>
+                <td>{{ user.surname }}</td>
+            </tr>
+            <tr>
                 <td>email</td>
                 <td>{{ user.email }}</td>
             </tr>
@@ -37,23 +45,27 @@
         <h4>Tasks ({{ user.tasks.__len__() }})</h4>
         <table class="mdl-data-table mdl-data-table--selectable mdl-shadow--2dp admin-user-table">
             <thead>
-            <th>task_id</th>
-            <th>time_start</th>
-            <th>time_end</th>
-            <th>rate</th>
-            <th>steps</th>
-            <th>tags</th>
-            <th></th>
+                <tr>
+                    <th>task_id</th>
+                    <th>time_start</th>
+                    <th>time_end</th>
+                    <th>rate</th>
+                    <th>steps</th>
+                    <th>tags</th>
+                    <th>reason</th>
+                    <th></th>
+                </tr>
             </thead>
             <tbody>
             {% for task in user.tasks %}
                 <tr>
                     <td>{{ task.task_id }}</td>
-                    <td>{{ task.time_start }}</td>
-                    <td>{{ task.time_end}}</td>
-                    <td>{{ task.rate}}</td>
-                    <td>{{ task.steps}}</td>
-                    <td>{{ task.tags}}</td>
+                    <td>{{ task.time_start.strftime('%Y-%m-%d %H:%M:%S') if task.time_start }}</td>
+                    <td>{{ task.time_end.strftime('%Y-%m-%d %H:%M:%S') if task.time_end }}</td>
+                    <td>{{ task.rate.value if task.rate }}</td>
+                    <td>{{ task.steps if task.steps }}</td>
+                    <td>{{ task.tags if task.tags }}</td>
+                    <td>{{ task.reason if task.reason }}</td>
                     <td>
                        {% if(task.rate) %}
                            <a href="{{ url_for('admin.clear_task', user_id=user.id, task_id=task.task_id) }}">Clear</a>

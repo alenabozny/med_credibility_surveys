@@ -3,11 +3,14 @@ from datetime import date
 import enum
 from flask_login import UserMixin
 
+
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
     password_hash = db.Column(db.String(128))
+    name = db.Column(db.String(128))
+    surname = db.Column(db.String(128))
     is_admin = db.Column(db.Boolean, default=False)
     tasks = db.relationship('Task', backref='user')
 
@@ -40,6 +43,7 @@ class Article(db.Model):
     def __repr__(self):
         return '<Article "{}">'.format(self.title)
 
+
 # decorator for the class function
 def handle_nonexistent(func):
     def wrapper(*args, **kwargs):
@@ -55,33 +59,33 @@ class Sentence(db.Model):
     sentence_id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.String(1000))
     article_id = db.Column(db.Integer, db.ForeignKey('article.article_id'))
-    sequence_nr = db.Column(db.Integer) # position in the article
+    sequence_nr = db.Column(db.Integer)  # position in the article
     to_evaluate = db.Column(db.Boolean)
     task = db.relationship('Task', backref='sentence')
 
     @handle_nonexistent
     def get_left_context(self, iterator):
         return Sentence.query.filter_by(
-                sequence_nr=self.sequence_nr - iterator,
-                article_id=self.article_id)\
+            sequence_nr=self.sequence_nr - iterator,
+            article_id=self.article_id) \
             .first().body
 
     @handle_nonexistent
     def get_right_context(self, iterator):
         return Sentence.query.filter_by(
-                sequence_nr=self.sequence_nr + iterator,
-                article_id=self.article_id)\
+            sequence_nr=self.sequence_nr + iterator,
+            article_id=self.article_id) \
             .first().body
 
     def get_context_sentences(self):
         sents = Sentence.query.filter_by(article_id=self.article_id)
         seq_nr = self.sequence_nr
-        left_length = len(sents[:seq_nr-1])
+        left_length = len(sents[:seq_nr - 1])
         right_length = len(sents[seq_nr:])
         len_range = left_length if left_length > right_length else right_length
         context_dict = {}
 
-        for i in range(1, len_range+1):
+        for i in range(1, len_range + 1):
             left_context = self.get_left_context(i)
             right_context = self.get_right_context(i)
 
@@ -98,6 +102,7 @@ class CredibilityRates(enum.Enum):
     NONCRED = "noncredible"
     NEU = "neutral/irrelevant"
 
+
 class Task(db.Model):
     task_id = db.Column(db.Integer, primary_key=True)
     sentence_id = db.Column(db.Integer, db.ForeignKey('sentence.sentence_id'), unique=True)
@@ -107,6 +112,7 @@ class Task(db.Model):
     rate = db.Column(db.Enum(CredibilityRates))
     steps = db.Column(db.Integer)
     tags = db.Column(db.String(200))
+    reason = db.Column(db.String(200))
 
     def __repr__(self):
         return '<Task for sentence "{}" from article {}.>'.format(self.sentence.body, self.sentence.article_id)
