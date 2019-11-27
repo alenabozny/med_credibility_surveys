@@ -41,3 +41,4 @@ haslo: test
     * [ ] - wzytywanie daty (funkcja) - ISO,  yyyy-mm-dd,  dd-mm-yyyy
     * [ ] - wyswietlanie tresci zdania w admince
     * [ ] - wyswietlanie tytulu artykulu w admince (przy taskach)
+    * [ ] - rózne wersje modyfikacji zdań (kopia artykułu)
