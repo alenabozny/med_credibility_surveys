@@ -105,8 +105,12 @@ def add_tasks(user_id):
 
     for sentence in sentences:
         try:
-            sentence.task[0].user_id = user_id
-            db.session.commit()
+            if sentence.task[0].user_id == None:
+                sentence.task[0].user_id = user_id
+                db.session.commit()
+            else:
+                user_task = User.query.filter_by(user_id=user_id)
+                flash('Task is already taken by the user {}'.format(user_task))
         except:
             flash('Task is alerdy added')
 
