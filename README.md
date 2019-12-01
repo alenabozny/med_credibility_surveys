@@ -38,7 +38,7 @@ haslo: test
     * [x] - kolejne taski losowe, nie kolejne
     * [x] - imie/nazwisko usera
     * [x] - usunac usuwanie usera
-    * [ ] - wzytywanie daty (funkcja) - ISO,  yyyy-mm-dd,  dd-mm-yyyy
-    * [ ] - wyswietlanie tresci zdania w admince
-    * [ ] - wyswietlanie tytulu artykulu w admince (przy taskach)
+    * [ ] - wczytywanie daty (funkcja) - ISO,  yyyy-mm-dd,  dd-mm-yyyy
+    * [x] - wyswietlanie tresci zdania w admince
+    * [x] - wyswietlanie tytulu artykulu w admince (przy taskach)
     * [ ] - rózne wersje modyfikacji zdań (kopia artykułu)

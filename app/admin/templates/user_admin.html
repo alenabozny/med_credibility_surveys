@@ -43,14 +43,16 @@
 
     {%  if user.tasks.__len__() > 0 %}
         <h4>Tasks ({{ user.tasks.__len__() }})</h4>
-        <table class="mdl-data-table mdl-data-table--selectable mdl-shadow--2dp admin-user-table">
+        <table class="mdl-data-table admin-user-table">
             <thead>
                 <tr>
-                    <th>task_id</th>
+                    <th class="number">id</th>
+                    <th>article</th>
+                    <th>sentence</th>
                     <th>time_start</th>
                     <th>time_end</th>
                     <th>rate</th>
-                    <th>steps</th>
+                    <th class="number">steps</th>
                     <th>tags</th>
                     <th>reason</th>
                     <th></th>
@@ -59,11 +61,13 @@
             <tbody>
             {% for task in user.tasks %}
                 <tr>
-                    <td>{{ task.task_id }}</td>
+                    <td class="number">{{ task.task_id }}</td>
+                    <td class="sentence-body">{{ task.sentence.article.title }}</td>
+                    <td class="sentence-body">{{ task.sentence.body }}</td>
                     <td>{{ task.time_start.strftime('%Y-%m-%d %H:%M:%S') if task.time_start }}</td>
                     <td>{{ task.time_end.strftime('%Y-%m-%d %H:%M:%S') if task.time_end }}</td>
                     <td>{{ task.rate.value if task.rate }}</td>
-                    <td>{{ task.steps if task.steps }}</td>
+                    <td class="number">{{ task.steps if task.steps }}</td>
                     <td>{{ task.tags if task.tags }}</td>
                     <td>{{ task.reason if task.reason }}</td>
                     <td>

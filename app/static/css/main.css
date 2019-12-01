@@ -128,3 +128,13 @@
     color: #000;
     font-size: 16px;
 }
+
+.sentence-body {
+    max-width: 500px;
+    white-space: normal;
+    word-break: break-all;
+}
+
+.number {
+    max-width: 50px;
+}
