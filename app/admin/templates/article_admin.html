@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div id="admin">
+        <div>
+            <h4>{{ article.title }}</h4>
+        </div>
+
+        <div>
+            <h5>Sentences</h5>
+            <table class="mdl-data-table admin-user-table">
+                <thead>
+                    <tr>
+                        <th class="number">ID</th>
+                        <th>sequence_nr</th>
+                        <th>Body</th>
+                        <th>Tasks</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for sentence in article.sentences %}
+                        <tr>
+                            <td class="number">{{ sentence.sentence_id }}</td>
+                            <td class="number">{{ sentence.sequence_nr }}</td>
+                            <td class="sentence-body">{{ sentence.body }}</td>
+                            <td>{{  sentence.task.__len__() }}</td>
+                            <td>
+                                {% if sentence.task.__len__() == 0 %}
+                                    <a href="{{ url_for('admin.sentence_details', sentence_id=sentence.sentence_id) }}">Change</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div>
+            <h4>Copy article</h4>
+            <form action="{{ url_for('admin.copy_article') }}" method="post">
+                {{ form.hidden_tag() }}
+                {{ form.title(size=32, class_="mdl-textfield__input") }}
+                <p>{{ form.submit(class_="mdl-button mdl-js-button mdl-button--raised mdl-button--colored") }}</p>
+            </form>
+        </div>
+    </div>
+{% endblock %}

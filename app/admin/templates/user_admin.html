@@ -31,15 +31,7 @@
             </tr>
         </tbody>
     </table>
-    <h4>Add tasks</h4>
-    <form action="{{ url_for('admin.add_tasks', user_id=user.id) }}" method="post" novalidate>
-        {{ taskForm.hidden_tag() }}
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            {{ taskForm.article.label(class_="mdl-textfield__label") }}<br>
-            {{ taskForm.article(class_="mdl-textfield__input") }}
-        </div>
-        <p>{{ taskForm.submit(class_="mdl-button mdl-js-button mdl-button--raised mdl-button--colored") }}</p>
-    </form>
+    <a href="{{ url_for('admin.add_tasks', user_id=user.id) }}">Add task to user</a>
 
     {%  if user.tasks.__len__() > 0 %}
         <h4>Tasks ({{ user.tasks.__len__() }})</h4>
@@ -62,7 +54,7 @@
             {% for task in user.tasks %}
                 <tr>
                     <td class="number">{{ task.task_id }}</td>
-                    <td class="sentence-body">{{ task.sentence.article.title }}</td>
+                    <td class="sentence-body"><a href="{{ url_for('admin.article_details', article_id=task.sentence.article.article_id) }}">{{ task.sentence.article.title }}</a></td>
                     <td class="sentence-body">{{ task.sentence.body }}</td>
                     <td>{{ task.time_start.strftime('%Y-%m-%d %H:%M:%S') if task.time_start }}</td>
                     <td>{{ task.time_end.strftime('%Y-%m-%d %H:%M:%S') if task.time_end }}</td>

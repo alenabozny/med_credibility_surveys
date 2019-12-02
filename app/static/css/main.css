@@ -138,3 +138,14 @@
 .number {
     max-width: 50px;
 }
+
+ul#sentences {
+    list-style: none;
+    margin: 10px 0 0 0;
+    padding: 0;
+}
+
+
+ul#sentences li{
+   margin-bottom: 10px;
+}

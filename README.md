@@ -34,11 +34,11 @@ haslo: test
 * Poprawki
     * [x] - przyciski back/save na dole  
     * [x] - przypisywanie tylko pustych taskow z danego artykułu
-    * [ ] - wybieranie, ktore zdania (co drugie, co trzecie)
+    * [ ] - wybieranie, ktore zdania (co drugie, co trzecie) - w trakcie, ale nie wiem jak zapisac, czy dodanie kazdego zdania oddzielnie spowoduje n unikalnych taskow?
     * [x] - kolejne taski losowe, nie kolejne
     * [x] - imie/nazwisko usera
     * [x] - usunac usuwanie usera
     * [ ] - wczytywanie daty (funkcja) - ISO,  yyyy-mm-dd,  dd-mm-yyyy
     * [x] - wyswietlanie tresci zdania w admince
     * [x] - wyswietlanie tytulu artykulu w admince (przy taskach)
-    * [ ] - rózne wersje modyfikacji zdań (kopia artykułu)
+    * [x] - rózne wersje modyfikacji zdań (kopia artykułu)
