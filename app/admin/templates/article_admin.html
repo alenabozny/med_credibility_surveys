@@ -14,7 +14,9 @@
                         <th class="number">ID</th>
                         <th>sequence_nr</th>
                         <th>Body</th>
+                        <th>Modification</th>
                         <th>Tasks</th>
+                        <th>Task Owner</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -24,7 +26,12 @@
                             <td class="number">{{ sentence.sentence_id }}</td>
                             <td class="number">{{ sentence.sequence_nr }}</td>
                             <td class="sentence-body">{{ sentence.body }}</td>
+                            <td class="sentence-body">{{ sentence.modification.value }}</td>
                             <td>{{  sentence.task.__len__() }}</td>
+                            <td>{% if sentence.task.__len__() != 0 %}
+                                    {{ sentence.task[0].user }}
+                                {% endif %}
+                            </td>
                             <td>
                                 {% if sentence.task.__len__() == 0 %}
                                     <a href="{{ url_for('admin.sentence_details', sentence_id=sentence.sentence_id) }}">Change</a>

@@ -56,6 +56,5 @@ docs/_build/
 target/
 
 # Articles
-articles/
 
 app.db

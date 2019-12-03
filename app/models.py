@@ -27,7 +27,7 @@ class User(UserMixin, db.Model):
         return False
 
     def __repr__(self):
-        return '<User {}>'.format(self.username)
+        return self.username
 
 
 class Article(db.Model):
@@ -54,6 +54,13 @@ def handle_nonexistent(func):
 
     return wrapper
 
+class ModificationTypes(enum.Enum):
+    HEDG = "hedging"
+    AHEDG = "antihedging"
+    NEG = "negation"
+    HIPER = "hyperonymy"
+    HIPO = "hyponymy"
+    SYN = "synonymy"
 
 class Sentence(db.Model):
     sentence_id = db.Column(db.Integer, primary_key=True)
@@ -62,6 +69,7 @@ class Sentence(db.Model):
     sequence_nr = db.Column(db.Integer)  # position in the article
     to_evaluate = db.Column(db.Boolean)
     task = db.relationship('Task', backref='sentence')
+    modification = db.Column(db.Enum(ModificationTypes))
 
     @handle_nonexistent
     def get_left_context(self, iterator):
