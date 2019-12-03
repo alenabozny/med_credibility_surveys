@@ -34,7 +34,7 @@ haslo: test
 * Poprawki
     * [x] - przyciski back/save na dole  
     * [x] - przypisywanie tylko pustych taskow z danego artykułu
-    * [ ] - wybieranie, ktore zdania (co drugie, co trzecie) - w trakcie, ale nie wiem jak zapisac, czy dodanie kazdego zdania oddzielnie spowoduje n unikalnych taskow?
+    * [ ] - wybieranie, ktore zdania (co drugie, co trzecie) - w trakcie, ale nie wiem jak zapisac, czy dodanie kazdego zdania oddzielnie spowoduje n unikalnych taskow? --> wybieramy co 2/3 zdanie, sprawdzamy po kolei, czy dane zdanie ma już task przypisany do użytkownika innego niż aktywny. Zdania z Taskami przypisanymi innym użytkownikom zostawiamy w spokoju. Zdania bez Tasków - tworzymy Task i przypisujemy go aktywnemu użytkownikowi. 1 zdanie = 1 task
     * [x] - kolejne taski losowe, nie kolejne
     * [x] - imie/nazwisko usera
     * [x] - usunac usuwanie usera
@@ -42,3 +42,7 @@ haslo: test
     * [x] - wyswietlanie tresci zdania w admince
     * [x] - wyswietlanie tytulu artykulu w admince (przy taskach)
     * [x] - rózne wersje modyfikacji zdań (kopia artykułu)
+    * [ ] - w widoku użytkownika: możliwość zaznaczenia więcej niż jednego tasku i "odprzypisania" ich za jednym razem
+    * [ ] - addTask: wyświetlenie tylko tych zdań, które mają swój task
+    * [ ] - addTask: dla zaznaczonych checkboxem zdań przypisać taski z nimi powiązane edytowanemu użytkownikowi
+    
