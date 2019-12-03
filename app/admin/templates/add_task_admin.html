@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block js %}
+    <script defer src="{{ url_for('static', filename='js/admin.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+    <div id="admin">
+        <h4>Add task to user <strong>{{ user.username }}</strong></h4>
+        <form action="" method="post">
+            {{ form.hidden_tag() }}
+
+            {% if(form.article.data) %}
+                <input type="hidden" name="article" value="{{ form.article.data }}" />
+                <button id="toggleAll" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Toggle all</button>
+                <button id="every2" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Every 2</button>
+                <button id="every3" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Every 3</button>
+                {{ form.sentences() }}
+            {% else %}
+                {{ form.article() }}
+            {% endif %}
+
+            <p>{{ form.submit(class_="mdl-button mdl-js-button mdl-button--raised mdl-button--colored") }}</p>
+        </form>
+    </div>
+{% endblock %}
