@@ -42,8 +42,7 @@ haslo: test
     * [x] - wyswietlanie tresci zdania w admince
     * [x] - wyswietlanie tytulu artykulu w admince (przy taskach)
     * [x] - rózne wersje modyfikacji zdań (kopia artykułu)
-    * [ ] - 3 stany checkboxu w widoku artykułu w admince:
-     * 1. AKTYWNY NIEZAZNACZONY - Task do zdania jezcze nie istnieje. Zaznaczenie i zapisanie powoduje stworzenie Tasku dla zdania, który od razu zostanie przypisany edytowanemu użytkownikowi.
-     * 2. AKTYWNY ZAZNACZONY - Task do zdania już istnieje i jest przypisany edytowanemu użytkownikowi. Odznaczenie i zapisanie zmian powoduje usunięcie Tasku.
-     * 3. NIEAKTYWNY - Task do zdania już istnieje, ale jest przypisany innemu użytkownikowi.
+    * [ ] - w widoku użytkownika: możliwość zaznaczenia więcej niż jednego tasku i "odprzypisania" ich za jednym razem
+    * [ ] - addTask: wyświetlenie tylko tych zdań, które mają swój task
+    * [ ] - addTask: dla zaznaczonych checkboxem zdań przypisać taski z nimi powiązane edytowanemu użytkownikowi
     
