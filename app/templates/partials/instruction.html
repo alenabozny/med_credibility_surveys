@@ -3,11 +3,36 @@
         Show instruction
     </button>
     <dialog class="mdl-dialog">
-        <h4 class="mdl-dialog__title">Instruction</h4>
+        <h4 class="mdl-dialog__title">Zdania oceniamy w trzystopniowej skali:</h4>
         <div class="mdl-dialog__content">
-            <p>
-                Instrukcja tresc
-            </p>
+            <div class="paragraph">
+                <ul>
+                    <li>
+                        <div class="green">WIARYGODNE (CREDIBLE)</div>
+                        <ul>
+                            <li>jest wiarygodne, nie budzi zastrzeżeń</li>
+                            <li>zawiera istotne informacje z punktu widzenia medycznego</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="red">NIEWIARYGODNE (NON-CREDIBLE)</div>
+                        <ul>
+                            <li>jest niewiarygodne</li>
+                            <li>zawiera nieprawdziwą i/lub niesprawdzoną informację</li>
+                            <li>zawiera przedawnione informacje (niezgodne z najnowszymi standardami)</li>
+                            <li>zawiera perswazję <u>sprzeczną</u> z obowiązującą wiedzą medyczną</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="yellow">NEUTRALNE (NEUTRAL\IRRELEVANT)</div>
+                        <ul>
+                            <li>nie zawiera informacji</li>
+                            <li>nie jest związane z medycyną</li>
+                            <li>jest niejasno sprecyzowane</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
         </div>
         <div class="mdl-dialog__actions">
             <button type="button" class="mdl-button close">Close</button>

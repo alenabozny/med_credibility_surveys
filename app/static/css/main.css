@@ -32,7 +32,7 @@
 
 .instructions {
     padding-bottom: 20px;
-    text-align: center;
+    text-align: left;
 }
 
 .home-container {
@@ -148,4 +148,24 @@ ul#sentences {
 
 ul#sentences li{
    margin-bottom: 10px;
+}
+
+.mdl-dialog {
+    width: 50%;
+}
+
+.paragraph {
+    font-size: 1.6em;
+}
+
+.green {
+    color: green
+}
+
+.red {
+    color: red
+    }
+
+.yellow {
+    color: black
 }
