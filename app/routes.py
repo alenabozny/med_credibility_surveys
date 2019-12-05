@@ -8,7 +8,27 @@ from flask_login import current_user, login_user, login_required, logout_user
 from datetime import datetime
 from sqlalchemy import func
 
-TAGS = ['tag1', 'tag2', 'tag3']
+# 1. W zdaniu jest namowa do szkodliwego działania;
+# 2. zdanie zawiera błędne dane liczbowe (np. 20% porodów w Ameryce kończy się cesarskim cięciem);
+# 3. zdanie zawiera przedawnione informacje;
+# 4. zdanie cytuje badania wykonane na bardzo małej próbie (badania wstępne, jeszcze nie potwierdzone na dużej próbie);
+# 5. zdanie zawiera argument, który jest bardzo słaby/nieistotny w kontekście omawianego tematu (mimo że prawdziwy);
+# 6. zdanie stanowi reklamę niesprawdzonego leku lub substancji albo niesprawdzonej terapii
+# 7. autor zdania wykazuje braki wiedzy merytorycznej lub nie jest obiektywny
+# 8. zdanie ma charakter anegdoty lub plotki
+# 9. zdanie jest niezrozumiałe lub niegramatyczne
+
+TAGS = [
+    "namowa do szkodliwego działania",
+    "zawiera błędne dane liczbowe",
+    "przedawnione informacje",
+    "cytuje badania wykonane na bardzo małej próbie",
+    "zawiera argument, który jest bardzo słaby/nieistotny w kontekście omawianego tematu",
+    "stanowi reklamę niesprawdzonego leku lub substancji albo niesprawdzonej terapii",
+    "autor zdania wykazuje braki wiedzy merytorycznej lub nie jest obiektywny",
+    "ma charakter anegdoty lub plotki",
+    "jest niezrozumiałe lub niegramatyczne"
+]
 
 
 @app.route('/')

@@ -96,6 +96,13 @@
     padding: 0 10px 10px 10px;
 }
 
+.tag {
+    width: 100%;
+    font-size: 1.1em;
+    margin: 0 0 20px 0;
+    color: #636363;
+}
+
 #tags div{
     display: flex;
     justify-content: space-around;

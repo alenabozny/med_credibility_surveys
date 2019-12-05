@@ -48,19 +48,19 @@
                 </div>
                 <div id="tags" class="hide">
                     <h4>Select reason</h4>
-                    <div>
+                    <ul style="list-style-type:none;">
                         {% for tag in tags %}
-                            <label class="mdl-radio mdl-js-radio" for="{{tag}}">
+                            <li class="tag" for="{{tag}}">
                                 <input type="checkbox"
                                        id="{{tag}}"
                                        name="tag"
                                        class="mdl-radio__button"
                                        value="{{ tag }}"
                                 >
-                                <span class="mdl-radio__label">{{tag}}</span>
-                            </label>
+                                <span class="tag">{{tag}}</span>
+                            </li>
                         {%  endfor %}
-                    </div>
+                    </ul>
                     <label for="reason">Other reason</label>
                     <textarea id="reason" class="mdl-textfield__input" name="reason"></textarea>
                 </div>
