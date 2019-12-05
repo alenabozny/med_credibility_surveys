@@ -60,7 +60,7 @@ def load_modified():
         if filename.endswith('.json'):
             with open(os.path.join('articles_modified', filename)) as json_file:
                 js = json.load(json_file)
-                if js["title"] in article_titles:
+                if js["title"] in article_titles and ("COPY " + js["title"]) not in article_titles:
                     article = Article(
                                     title="COPY " + js["title"],
                                     # pub_date=js["pub_date"],
@@ -68,9 +68,16 @@ def load_modified():
                                     url=js["url"],
                                     query=js["query"]
                                 )
+
                     sentences = sent_tokenize(js["body"])
                     for i, s in enumerate(sentences):
-                        reg = '\s*{{2}(?P<mod_type>NEG|SYN|HIP)\}{2}'
+                        # HEDG = "hedging"
+                        # AHEDG = "antihedging"
+                        # NEG = "negation"
+                        # HIPER = "hyperonymy"
+                        # HIPO = "hyponymy"
+                        # SYN = "synonymy"
+                        reg = '\s*{{2}(?P<mod_type>HEDG|AHEDG|NEG|HIPER|HIPO|SYN)\}{2}'
                         try:
                             modification = re.match(reg, s).group('mod_type')
                             s = s.replace('{{'+modification+'}}', '')
@@ -95,7 +102,9 @@ def load_modified():
 
                     db.session.commit()
                 else:
-                    print("Cannot load Article: \"" + js["title"] + "\" when it's original version is not yet in a database.")
+                    print("Cannot load Article: \"" + js["title"] + "\" when it's original "\
+                                                                    "version is not yet in a database "\
+                                                                    "OR the COPY is already in a database")
         else:
             continue
 
