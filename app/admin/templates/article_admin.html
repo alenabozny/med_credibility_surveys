@@ -29,7 +29,7 @@
                             <td class="sentence-body">{{ sentence.modification.value }}</td>
                             <td>{{  sentence.task.__len__() }}</td>
                             <td>{% if sentence.task.__len__() != 0 %}
-                                    {{ sentence.task[0].user }}
+                                    {{ sentence.task[0].user  if sentence.task[0].user }}
                                 {% endif %}
                             </td>
                             <td>
@@ -41,15 +41,6 @@
                     {% endfor %}
                 </tbody>
             </table>
-        </div>
-
-        <div>
-            <h4>Copy article</h4>
-            <form action="{{ url_for('admin.copy_article') }}" method="post">
-                {{ form.hidden_tag() }}
-                {{ form.title(size=32, class_="mdl-textfield__input") }}
-                <p>{{ form.submit(class_="mdl-button mdl-js-button mdl-button--raised mdl-button--colored") }}</p>
-            </form>
         </div>
     </div>
 {% endblock %}

@@ -27,13 +27,6 @@ class RegisterForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Register')
 
-
-class CopyArticleForm(FlaskForm):
-    article_id = HiddenField()
-    title = StringField('Title', validators=[DataRequired()])
-    submit = SubmitField('Copy')
-
-
 class EditSentenceForm(FlaskForm):
     sentence_id = HiddenField()
     body = StringField('Body', validators=[DataRequired()])

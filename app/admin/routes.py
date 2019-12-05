@@ -1,9 +1,9 @@
 from flask import render_template, url_for
 from flask import request, redirect, flash
-from sqlalchemy import null
+from sqlalchemy import null, and_, not_, or_
 from app import db
 from app.admin import bp_admin
-from app.admin.forms import UserTaskForm, ChangePasswordForm, RegisterForm, CopyArticleForm, EditSentenceForm
+from app.admin.forms import UserTaskForm, ChangePasswordForm, RegisterForm, EditSentenceForm
 from app.models import Task, User, Article, Sentence
 from werkzeug.security import generate_password_hash
 from flask_login import current_user, login_required
@@ -106,11 +106,27 @@ def add_tasks(user_id):
 
     form = UserTaskForm(request.form)
     user = User.query.filter_by(id=user_id).first()
+    disabledOptions = []
+    checkedOptions = []
 
     if form.sentences.data.__len__() is not 0:
-        print(form.sentences.data)  # id zdan
-        print(user_id)  # id usera
-        flash('Added')  # nie wiem co dalej jak to zapisac
+        tasks = Task.query.filter(
+            and_(
+                Task.sentence.has(article_id=form.article.data),
+                Task.user_id == user_id,
+                Task.steps.is_(None)
+            )
+        ).all()
+
+        for task in tasks:
+            print(task)
+            task.user_id = None
+
+        for id in form.sentences.data:
+            task = Task.query.filter(Task.task_id == id).first()
+            task.user_id = user_id
+        db.session.commit()
+        flash('changed')
         return redirect(url_for('admin.user_details', user_id=user_id))
 
     if form.article.data is None:
@@ -121,13 +137,25 @@ def add_tasks(user_id):
                                 filtered_articles]
 
     if form.article.data is not None:
-        sentences = Sentence.query.filter_by(article_id=form.article.data).all()
-        form.sentences.choices = [(sentence.sentence_id, sentence.body) for sentence in sentences]
+        tasks = Task.query.filter(Task.sentence.has(article_id=form.article.data))
+
+        form.sentences.choices = [(task.task_id, task.sentence.body) for task in tasks.all()]
+        disabledOptions = tasks.filter(
+            or_(
+                Task.user_id != user_id,
+                and_(Task.user_id == user_id, not_(Task.steps.is_(None)))
+            )
+        ).all()
+        checkedOptions = tasks.filter(
+            and_(Task.user_id == user_id)
+        ).all()
 
     return render_template(
         'add_task_admin.html',
         form=form,
-        user=user
+        user=user,
+        disabledOptions=list(map(lambda task: task.task_id, disabledOptions)),
+        checkedOptions=list(map(lambda task: task.task_id, checkedOptions))
     )
 
 
@@ -196,47 +224,10 @@ def article_details(article_id):
 
     article = Article.query.filter_by(article_id=article_id).first()
 
-    form = CopyArticleForm()
-    form.title.data = article.title + ' (Copy)'
-    form.article_id.data = article.article_id
-
     return render_template(
         'article_admin.html',
-        article=article,
-        form=form
+        article=article
     )
-
-
-@bp_admin.route('/article/copy', methods=['POST'])
-@login_required
-def copy_article():
-    form = CopyArticleForm(request.form)
-
-    old_article = Article.query.filter_by(article_id=form.article_id.data).first()
-
-    article = Article(
-        pub_date=old_article.pub_date,
-        access_date=old_article.access_date,
-        url=old_article.url,
-        title=form.title.data,
-        queryTxt=old_article.queryTxt,
-        keywords=old_article.keywords
-    )
-
-    db.session.add(article)
-    db.session.commit()
-
-    for old_sentence in old_article.sentences:
-        sentence = Sentence(
-            body=old_sentence.body,
-            article_id=article.article_id,
-            sequence_nr=old_sentence.sequence_nr,
-            to_evaluate=old_sentence.to_evaluate
-        )
-        db.session.add(sentence)
-    db.session.commit()
-
-    return redirect(url_for('admin.article_details', article_id=article.article_id))
 
 
 @bp_admin.route('/sentence/<int:sentence_id>', methods=['GET', 'POST'])

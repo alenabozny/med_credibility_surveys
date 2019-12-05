@@ -58,3 +58,4 @@ target/
 # Articles
 
 app.db
+app.db-journal

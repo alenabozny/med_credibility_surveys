@@ -8,27 +8,29 @@
             </a>
         {% endif %}
 
-        <h4>Your evaluations ({{ tasks.__len__() }}): </h4>
+        <h4>Your evaluations ({{ tasks.__len__() }})</h4>
 
-        <table class="mdl-data-table mdl-data-table--selectable mdl-shadow--2dp taks-table">
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Rate</th>
-                    <th>Steps</th>
-                </tr>
-            </thead>
-            {% for task in tasks %}
-                <tr>
-                    <td>
-                        {{ task.time_end.strftime('%Y-%m-%d %H:%M:%S') if task.time_end }}
-                    </td>
-                    <td>
-                        {{ task.rate.value }}
-                    </td>
-                    <td>{{ task.steps}}</td>
-                </tr>
-            {% endfor %}
-        </table>
+        {%  if tasks.__len__() %}
+            <table class="mdl-data-table mdl-data-table--selectable mdl-shadow--2dp taks-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Rate</th>
+                        <th>Steps</th>
+                    </tr>
+                </thead>
+                {% for task in tasks %}
+                    <tr>
+                        <td>
+                            {{ task.time_end.strftime('%Y-%m-%d %H:%M:%S') if task.time_end }}
+                        </td>
+                        <td>
+                            {{ task.rate.value }}
+                        </td>
+                        <td>{{ task.steps}}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
     </div>
 {% endblock %}
