@@ -6,7 +6,7 @@ from app.models import Task, User, CredibilityRates
 from werkzeug.security import check_password_hash
 from flask_login import current_user, login_user, login_required, logout_user
 from datetime import datetime
-from sqlalchemy import func
+from sqlalchemy import func, and_, not_
 
 # 1. W zdaniu jest namowa do szkodliwego działania;
 # 2. zdanie zawiera błędne dane liczbowe (np. 20% porodów w Ameryce kończy się cesarskim cięciem);
@@ -35,9 +35,10 @@ TAGS = [
 @app.route('/index')
 @login_required
 def index():
-    tasks = Task.query.filter_by(
-        user_id=current_user.id
-    ).filter(Task.rate is not None).all()
+    tasks = Task.query.filter(and_(
+        Task.user_id == current_user.id,
+        not_(Task.steps.is_(None))
+    )).all()
 
     nextTask = Task.query.filter_by(
         user_id=current_user.id,

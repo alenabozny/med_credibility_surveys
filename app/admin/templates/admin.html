@@ -3,13 +3,12 @@
 {% block content %}
     <div id="admin">
         <h4>
-            Users
+            Users ({{ users.__len__() }})
         </h4>
-        <a href="{{ url_for('admin.user_add') }}">add new user</a>
-        <table class="mdl-data-table mdl-data-table--selectable mdl-shadow--2dp admin-user-table">
+        <table class="mdl-data-table mdl-data-table--selectable admin-user-table">
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <th class="number">ID</th>
                     <th>Username</th>
                     <th>Name</th>
                     <th>Surname</th>
@@ -22,7 +21,7 @@
             <tbody>
                 {% for user in users %}
                     <tr>
-                        <td>{{ user.id  if user.id }}</td>
+                        <td class="number">{{ user.id  if user.id }}</td>
                         <td>{{ user.username if user.username }}</td>
                         <td>{{ user.name if user.name }}</td>
                         <td>{{ user.surname if user.surname }}</td>
@@ -50,17 +49,18 @@
                 {% endfor %}
             </tbody>
         </table>
-        <h4>Articles</h4>
-        <table class="mdl-data-table mdl-data-table--selectable mdl-shadow--2dp admin-user-table">
+        <a href="{{ url_for('admin.user_add') }}">add new user</a>
+        <h4>Articles ({{ articles.__len__() }})</h4>
+        <table class="mdl-data-table mdl-data-table--selectable admin-user-table">
             <thead>
-                <th>ID</th>
+                <th class="number">ID</th>
                 <th>Title</th>
                 <th></th>
             </thead>
             <tbody>
                 {% for article in articles %}
                    <tr>
-                       <td>{{ article.article_id }}</td>
+                       <td class="number">{{ article.article_id }}</td>
                        <td>
                            <a href="{{ article.url }}">
                                {{ article.title }}

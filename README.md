@@ -42,7 +42,7 @@ haslo: test
     * [x] - wyswietlanie tresci zdania w admince
     * [x] - wyswietlanie tytulu artykulu w admince (przy taskach)
     * [x] - rózne wersje modyfikacji zdań (kopia artykułu)
-    * [ ] - w widoku użytkownika: możliwość zaznaczenia więcej niż jednego tasku i "odprzypisania" ich za jednym razem (posrednio przy dodawaniu zrobilem, zrobie tez we wszystkich)
+    * [x] - w widoku użytkownika: możliwość zaznaczenia więcej niż jednego tasku i "odprzypisania" ich za jednym razem
     * [x] - addTask: wyświetlenie tylko tych zdań, które mają swój task
     * [x] - addTask: dla zaznaczonych checkboxem zdań przypisać taski z nimi powiązane edytowanemu użytkownikowi
     

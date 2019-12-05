@@ -14,7 +14,14 @@ class UserTaskForm(FlaskForm):
     submit = SubmitField('Next')
 
 
+class UserRemoveTasksForm(FlaskForm):
+    user_id = HiddenField()
+    tasks = MultiCheckboxField('Tasks', coerce=int, choices=[], validators=[])
+    submit = SubmitField('Remove selected tasks')
+
+
 class ChangePasswordForm(FlaskForm):
+    user_id = HiddenField()
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Change password')
 
@@ -26,6 +33,7 @@ class RegisterForm(FlaskForm):
     email = PasswordField('Email', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Register')
+
 
 class EditSentenceForm(FlaskForm):
     sentence_id = HiddenField()

@@ -3,7 +3,7 @@ from flask import request, redirect, flash
 from sqlalchemy import null, and_, not_, or_
 from app import db
 from app.admin import bp_admin
-from app.admin.forms import UserTaskForm, ChangePasswordForm, RegisterForm, EditSentenceForm
+from app.admin.forms import UserTaskForm, ChangePasswordForm, RegisterForm, EditSentenceForm, UserRemoveTasksForm
 from app.models import Task, User, Article, Sentence
 from werkzeug.security import generate_password_hash
 from flask_login import current_user, login_required
@@ -53,7 +53,7 @@ def user_add():
     return render_template('user_add.html', form=form)
 
 
-@bp_admin.route('/user/<int:user_id>', methods=['GET', 'POST'])
+@bp_admin.route('/user/<int:user_id>')
 @login_required
 def user_details(user_id):
     if not current_user.is_admin:
@@ -61,6 +61,9 @@ def user_details(user_id):
 
     articles = Article.query.filter(Article.title is not None).all()
     form = ChangePasswordForm()
+    form.user_id.data = user_id
+    removeForm = UserRemoveTasksForm()
+    removeForm.user_id.data = user_id
     user = User.query.filter_by(id=user_id).outerjoin(Task).first()
 
     if not user:
@@ -72,17 +75,35 @@ def user_details(user_id):
         itle=user.username,
         user=user,
         form=form,
+        removeForm=removeForm,
         articles=articles
     )
 
 
-@bp_admin.route('/user/<int:user_id>/changePassword', methods=['POST'])
+@bp_admin.route('/removeUserTasks', methods=['POST'])
 @login_required
-def change_password(user_id):
+def remove_user_tasks():
+    if not current_user.is_admin:
+        return redirect("/")
+    form = UserRemoveTasksForm(request.form)
+
+    for task_id in form.tasks.data:
+        task = Task.query.filter_by(task_id=task_id).first()
+        task.user_id = None
+    db.session.commit()
+    flash('Tasks were deleted')
+
+    return redirect(url_for('admin.user_details', user_id=form.user_id.data))
+
+
+@bp_admin.route('/changePassword', methods=['POST'])
+@login_required
+def change_password():
     if not current_user.is_admin:
         return redirect("/")
 
     form = ChangePasswordForm(request.form)
+    user_id = form.user_id.data
     user = User.query.filter_by(id=user_id).outerjoin(Task).first()
 
     if not user:
@@ -198,19 +219,6 @@ def clear_task(user_id, task_id):
     task.time_start = null()
     task.steps = null()
     task.reason = null()
-    db.session.commit()
-
-    return redirect(url_for('admin.user_details', user_id=user_id))
-
-
-@bp_admin.route('/user/<int:user_id>/removeTask/<int:task_id>')
-@login_required
-def remove_task(user_id, task_id):
-    if not current_user.is_admin:
-        return redirect("/")
-
-    task = Task.query.filter_by(task_id=task_id, user_id=user_id).first()
-    db.session.delete(task)
     db.session.commit()
 
     return redirect(url_for('admin.user_details', user_id=user_id))

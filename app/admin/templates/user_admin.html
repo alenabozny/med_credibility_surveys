@@ -3,7 +3,7 @@
 {% block content %}
 <div>
     <h4>User data</h4>
-    <table class="mdl-data-table mdl-data-table--selectable mdl-shadow--2dp admin-user-table">
+    <table class="mdl-data-table admin-user-table">
         <tbody>
             <tr>
                 <td>Id</td>
@@ -31,14 +31,16 @@
             </tr>
         </tbody>
     </table>
-    <a href="{{ url_for('admin.add_tasks', user_id=user.id) }}">Add task to user</a>
 
+    <h4>Tasks ({{ user.tasks.__len__() }})</h4>
     {%  if user.tasks.__len__() > 0 %}
-        <h4>Tasks ({{ user.tasks.__len__() }})</h4>
-        <table class="mdl-data-table admin-user-table">
-            <thead>
+        <form action="{{ url_for('admin.remove_user_tasks') }}" method="post" novalidate>
+            {{ removeForm.hidden_tag() }}
+            <table class="mdl-data-table admin-user-table">
+                <thead>
                 <tr>
-                    <th class="number">id</th>
+                    <th></th>
+                    <th class="number">ID</th>
                     <th>article</th>
                     <th>sentence</th>
                     <th>time_start</th>
@@ -49,32 +51,37 @@
                     <th>reason</th>
                     <th></th>
                 </tr>
-            </thead>
-            <tbody>
-            {% for task in user.tasks %}
-                <tr>
-                    <td class="number">{{ task.task_id }}</td>
-                    <td class="sentence-body"><a href="{{ url_for('admin.article_details', article_id=task.sentence.article.article_id) }}">{{ task.sentence.article.title }}</a></td>
-                    <td class="sentence-body">{{ task.sentence.body }}</td>
-                    <td>{{ task.time_start.strftime('%Y-%m-%d %H:%M:%S') if task.time_start }}</td>
-                    <td>{{ task.time_end.strftime('%Y-%m-%d %H:%M:%S') if task.time_end }}</td>
-                    <td>{{ task.rate.value if task.rate }}</td>
-                    <td class="number">{{ task.steps if task.steps }}</td>
-                    <td>{{ task.tags if task.tags }}</td>
-                    <td>{{ task.reason if task.reason }}</td>
-                    <td>
-                       {% if(task.rate) %}
-                           <a href="{{ url_for('admin.clear_task', user_id=user.id, task_id=task.task_id) }}">Clear</a>
-                        {% endif %}
-                        <a href="{{ url_for('admin.remove_task', user_id=user.id, task_id=task.task_id) }}">Remove</a>
-                    </td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                {% for task in user.tasks %}
+                    <tr>
+                        <td>
+                            <input name="tasks" type="checkbox" value="{{ task.task_id }}">
+                        </td>
+                        <td class="number">{{ task.task_id }}</td>
+                        <td class="sentence-body"><a href="{{ url_for('admin.article_details', article_id=task.sentence.article.article_id) }}">{{ task.sentence.article.title }}</a></td>
+                        <td class="sentence-body">{{ task.sentence.body }}</td>
+                        <td>{{ task.time_start.strftime('%Y-%m-%d %H:%M:%S') if task.time_start }}</td>
+                        <td>{{ task.time_end.strftime('%Y-%m-%d %H:%M:%S') if task.time_end }}</td>
+                        <td>{{ task.rate.value if task.rate }}</td>
+                        <td class="number">{{ task.steps if task.steps }}</td>
+                        <td>{{ task.tags if task.tags }}</td>
+                        <td>{{ task.reason if task.reason }}</td>
+                        <td>
+                            {% if(task.rate) %}
+                                <a href="{{ url_for('admin.clear_task', user_id=user.id, task_id=task.task_id) }}">Clear</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+                {{ removeForm.submit(class_="mdl-button mdl-js-button mdl-button--raised mdl-button--colored") }}
+        </form>
     {% endif %}
+    <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-button--accent" href="{{ url_for('admin.add_tasks', user_id=user.id) }}">Add tasks</a>
     <h4>Change password</h4>
-    <form action="{{ url_for('admin.change_password', user_id=user.id) }}" method="post" novalidate>
+    <form action="{{ url_for('admin.change_password') }}" method="post" novalidate>
         {{ form.hidden_tag() }}
         <div class="mdl-card__supporting-text">
             <div class="mdl-textfield mdl-js-textfield">

@@ -3,7 +3,7 @@
 {% block content %}
     <div class="home-container">
         {%  if nextTask %}
-            <a href="{{ url_for('perform_task', task_id = nextTask.task_id) }}" class="mdl-button mdl-js-button mdl-button--raised  mdl-button--accent">
+            <a href="{{ url_for('perform_task', task_id = nextTask.task_id) }}" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">
                 Evaluate next sentence
             </a>
         {% endif %}
@@ -11,7 +11,7 @@
         <h4>Your evaluations ({{ tasks.__len__() }})</h4>
 
         {%  if tasks.__len__() %}
-            <table class="mdl-data-table mdl-data-table--selectable mdl-shadow--2dp taks-table">
+            <table class="mdl-data-table taks-table">
                 <thead>
                     <tr>
                         <th>Date</th>
@@ -27,7 +27,7 @@
                         <td>
                             {{ task.rate.value }}
                         </td>
-                        <td>{{ task.steps}}</td>
+                        <td>{{ task.steps if task.steps}}</td>
                     </tr>
                 {% endfor %}
             </table>
