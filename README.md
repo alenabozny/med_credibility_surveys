@@ -29,8 +29,8 @@ haslo: test
 * ADMINKA
   * [x] Przypisywanie tasków dotyczących zdań z wybranego artykułu do Usera
 * KOSMETYKA
-  * [ ] dodać instrukcję
-  * [ ] dodać tagi
+  * [x] dodać instrukcję
+  * [x] dodać tagi
 * Poprawki
     * [x] - przyciski back/save na dole  
     * [x] - przypisywanie tylko pustych taskow z danego artykułu
