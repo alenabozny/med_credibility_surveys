@@ -18,7 +18,7 @@
                     <div class="mdl-layout-spacer"></div>
                     <nav class="mdl-navigation mdl-layout--large-screen-only">
                         {% if current_user.is_authenticated %}
-                            User: <strong>&nbsp;{{ current_user.username }}</strong>
+                            {{ current_user.name }} {{ current_user.surname }}&nbsp;<strong>({{ current_user.username }})</strong>
                             <a class="mdl-navigation__link" href="{{ url_for('logout') }}">
                                 Log out
                             </a>

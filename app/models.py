@@ -2,6 +2,7 @@ from app import db
 from datetime import date
 import enum
 from flask_login import UserMixin
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 class User(UserMixin, db.Model):
@@ -15,6 +16,14 @@ class User(UserMixin, db.Model):
     tasks = db.relationship('Task', backref='user')
 
     @property
+    def password(self):
+        return self.password_hash
+
+    @password.setter
+    def password(self, value):
+        self.password_hash = generate_password_hash(value)
+
+    @property
     def is_authenticated(self):
         return True
 
@@ -25,6 +34,9 @@ class User(UserMixin, db.Model):
     @property
     def is_anonymous(self):
         return False
+
+    def is_password_correct(self, password):
+        return check_password_hash(self.password, password)
 
     def __repr__(self):
         return self.username
@@ -54,6 +66,7 @@ def handle_nonexistent(func):
 
     return wrapper
 
+
 class ModificationTypes(enum.Enum):
     HEDG = "hedging"
     AHEDG = "antihedging"
@@ -61,6 +74,7 @@ class ModificationTypes(enum.Enum):
     HIPER = "hyperonymy"
     HIPO = "hyponymy"
     SYN = "synonymy"
+
 
 class Sentence(db.Model):
     sentence_id = db.Column(db.Integer, primary_key=True)

@@ -3,19 +3,15 @@ from flask import request, redirect, flash
 from sqlalchemy import null, and_, not_, or_
 from app import db
 from app.admin import bp_admin
+from app.admin.admin_required import admin_required
 from app.admin.forms import UserTaskForm, ChangePasswordForm, RegisterForm, EditSentenceForm, UserRemoveTasksForm
 from app.models import Task, User, Article, Sentence
-from werkzeug.security import generate_password_hash
-from flask_login import current_user, login_required
 
 
 @bp_admin.route('/')
 @bp_admin.route('/index')
-@login_required
+@admin_required
 def admin():
-    if not current_user.is_admin:
-        return redirect("/")
-
     users = User.query.outerjoin(Task).all()
     articles = Article.query.all()
 
@@ -28,20 +24,17 @@ def admin():
 
 
 @bp_admin.route('/user_add', methods=['GET', 'POST'])
-@login_required
+@admin_required
 def user_add():
-    if not current_user.is_admin:
-        return redirect("/")
-
     form = RegisterForm(request.form)
 
     if request.method == 'POST':
         if form.validate():
-            username = request.form['username']
-            email = request.form['email']
-            password = generate_password_hash(request.form['password'])
-            name = request.form['name']
-            surname = request.form['surname']
+            username = form.username.data
+            email = form.email.data
+            password = form.password.data
+            name = form.name.data
+            surname = form.surname.data
 
             user = User(username=username, email=email, password_hash=password, name=name, surname=surname)
             db.session.add(user)
@@ -54,16 +47,16 @@ def user_add():
 
 
 @bp_admin.route('/user/<int:user_id>')
-@login_required
+@admin_required
 def user_details(user_id):
-    if not current_user.is_admin:
-        return redirect("/")
-
     articles = Article.query.filter(Article.title is not None).all()
+
     form = ChangePasswordForm()
     form.user_id.data = user_id
+
     removeForm = UserRemoveTasksForm()
     removeForm.user_id.data = user_id
+
     user = User.query.filter_by(id=user_id).outerjoin(Task).first()
 
     if not user:
@@ -81,10 +74,8 @@ def user_details(user_id):
 
 
 @bp_admin.route('/removeUserTasks', methods=['POST'])
-@login_required
+@admin_required
 def remove_user_tasks():
-    if not current_user.is_admin:
-        return redirect("/")
     form = UserRemoveTasksForm(request.form)
 
     for task_id in form.tasks.data:
@@ -97,11 +88,8 @@ def remove_user_tasks():
 
 
 @bp_admin.route('/changePassword', methods=['POST'])
-@login_required
+@admin_required
 def change_password():
-    if not current_user.is_admin:
-        return redirect("/")
-
     form = ChangePasswordForm(request.form)
     user_id = form.user_id.data
     user = User.query.filter_by(id=user_id).outerjoin(Task).first()
@@ -111,8 +99,8 @@ def change_password():
         return redirect(url_for('admin'))
 
     if form.validate():
-        password = generate_password_hash(request.form['password'])
-        user.password_hash = password
+        password = form.password.data
+        user.password = password
         db.session.commit()
         flash('Password changed')
 
@@ -120,11 +108,8 @@ def change_password():
 
 
 @bp_admin.route('/user/<int:user_id>/addTasks', methods=['GET', 'POST'])
-@login_required
+@admin_required
 def add_tasks(user_id):
-    if not current_user.is_admin:
-        return redirect("/")
-
     form = UserTaskForm(request.form)
     user = User.query.filter_by(id=user_id).first()
     disabledOptions = []
@@ -181,11 +166,8 @@ def add_tasks(user_id):
 
 
 @bp_admin.route('/remove/<int:user_id>')
-@login_required
+@admin_required
 def remove_user(user_id):
-    if not current_user.is_admin:
-        return redirect("/")
-
     user = User.query.filter_by(id=user_id).first()
     db.session.delete(user)
     db.session.commit()
@@ -194,24 +176,18 @@ def remove_user(user_id):
 
 
 @bp_admin.route('/toggle_admin/<int:user_id>')
-@login_required
+@admin_required
 def toggle_admin(user_id):
-    if not current_user.is_admin:
-        return redirect("/")
-
     user = User.query.filter_by(id=user_id).first()
     user.is_admin = not user.is_admin
     db.session.commit()
     flash('Admin role changed')
-    return redirect(url_for('admin'))
+    return redirect(url_for('admin.admin'))
 
 
 @bp_admin.route('/user/<int:user_id>/clearTask/<int:task_id>')
-@login_required
+@admin_required
 def clear_task(user_id, task_id):
-    if not current_user.is_admin:
-        return redirect("/")
-
     task = Task.query.filter_by(task_id=task_id, user_id=user_id).first()
     task.rate = null()
     task.tags = null()
@@ -225,11 +201,8 @@ def clear_task(user_id, task_id):
 
 
 @bp_admin.route('/article/<int:article_id>')
-@login_required
+@admin_required
 def article_details(article_id):
-    if not current_user.is_admin:
-        return redirect("/")
-
     article = Article.query.filter_by(article_id=article_id).first()
 
     return render_template(
@@ -239,11 +212,8 @@ def article_details(article_id):
 
 
 @bp_admin.route('/sentence/<int:sentence_id>', methods=['GET', 'POST'])
-@login_required
+@admin_required
 def sentence_details(sentence_id):
-    if not current_user.is_admin:
-        return redirect("/")
-
     form = EditSentenceForm(request.form)
     sentence = Sentence.query.filter_by(sentence_id=sentence_id).first()
 

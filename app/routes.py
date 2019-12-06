@@ -3,7 +3,6 @@ from flask import request, redirect, url_for, flash
 from app import app, db
 from app.forms import LoginForm
 from app.models import Task, User, CredibilityRates
-from werkzeug.security import check_password_hash
 from flask_login import current_user, login_user, login_required, logout_user
 from datetime import datetime
 from sqlalchemy import func, and_, not_
@@ -65,7 +64,7 @@ def login():
 
         user = User.query.filter_by(username=username).first()
 
-        if user and check_password_hash(user.password_hash, password):
+        if user and user.is_password_correct(password):
             login_user(user, remember=remember)
             return redirect("/")
         else:
