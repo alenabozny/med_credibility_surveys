@@ -39,6 +39,14 @@ def index():
         not_(Task.steps.is_(None))
     )).all()
 
+    tasks_incomplete = Task.query.filter_by(
+        user_id=current_user.id,
+        rate=None
+    ).all()
+
+    completed_tasks_len = tasks.__len__()-tasks_incomplete.__len__()
+    total_tasks_len = tasks.__len__()
+
     nextTask = Task.query.filter_by(
         user_id=current_user.id,
         rate=None
@@ -48,6 +56,8 @@ def index():
         'index.html',
         title='Home',
         tasks=tasks,
+        completed_tasks_len=completed_tasks_len,
+        total_tasks_len=total_tasks_len,
         nextTask=nextTask
     )
 
