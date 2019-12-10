@@ -71,13 +71,13 @@ def load_modified():
 
                     sentences = sent_tokenize(js["body"])
                     for i, s in enumerate(sentences):
-                        # HEDG = "hedging"
-                        # AHEDG = "antihedging"
+                        # HEDGE = "hedging"
+                        # AHEDGE = "antihedging"
                         # NEG = "negation"
-                        # HIPER = "hyperonymy"
-                        # HIPO = "hyponymy"
+                        # HYPER = "hyperonymy"
+                        # HYPO = "hyponymy"
                         # SYN = "synonymy"
-                        reg = '\s*{{2}(?P<mod_type>HEDG|AHEDG|NEG|HIPER|HIPO|SYN)\}{2}'
+                        reg = '\s*{{2}(?P<mod_type>HEDGE|AHEDGE|NEG|HYPER|HYPO|SYN)\}{2}'
                         try:
                             modification = re.match(reg, s).group('mod_type')
                             s = s.replace('{{'+modification+'}}', '')
