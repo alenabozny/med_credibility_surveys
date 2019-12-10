@@ -34,17 +34,16 @@ TAGS = [
 @app.route('/index')
 @login_required
 def index():
-    tasks = Task.query.filter(and_(
-        Task.user_id == current_user.id,
-        not_(Task.steps.is_(None))
-    )).all()
+    tasks = Task.query.filter_by(
+        Task.user_id == current_user.id
+    ).all()
 
     tasks_incomplete = Task.query.filter_by(
         user_id=current_user.id,
         rate=None
     ).all()
 
-    completed_tasks_len = tasks.__len__()-tasks_incomplete.__len__()
+    completed_tasks_len = tasks.__len__() - tasks_incomplete.__len__()
     total_tasks_len = tasks.__len__()
 
     nextTask = Task.query.filter_by(
