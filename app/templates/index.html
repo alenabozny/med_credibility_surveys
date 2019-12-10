@@ -10,30 +10,6 @@
 
         <h4>Your completed evaluations: {{ completed_tasks_len }} out of {{ total_tasks_len }} </h4>
 
-<<<<<<< Updated upstream
-        {%  if tasks.__len__() %}
-            <table class="mdl-data-table taks-table">
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Rate</th>
-                        <th>Steps</th>
-                    </tr>
-                </thead>
-                {% for task in tasks %}
-                    <tr>
-                        <td>
-                            {{ task.time_end.strftime('%Y-%m-%d %H:%M:%S') if task.time_end }}
-                        </td>
-                        <td>
-                            {{ task.rate.value }}
-                        </td>
-                        <td>{{ task.steps if task.steps}}</td>
-                    </tr>
-                {% endfor %}
-            </table>
-        {% endif %}
-=======
         <progress class="progress-bar" max="{{ total_tasks_len }}" value="{{ completed_tasks_len }}"></progress>
 
         <!--{%  if tasks.__len__() %}-->
@@ -58,6 +34,5 @@
                 <!--{% endfor %}-->
             <!--</table>-->
         <!--{% endif %}-->
->>>>>>> Stashed changes
     </div>
 {% endblock %}
