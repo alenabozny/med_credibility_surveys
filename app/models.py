@@ -68,11 +68,11 @@ def handle_nonexistent(func):
 
 
 class ModificationTypes(enum.Enum):
-    HEDG = "hedging"
-    AHEDG = "antihedging"
+    HEDGE = "hedging"
+    AHEDGE = "antihedging"
     NEG = "negation"
-    HIPER = "hyperonymy"
-    HIPO = "hyponymy"
+    HYPER = "hyperonymy"
+    HYPO = "hyponymy"
     SYN = "synonymy"
 
 

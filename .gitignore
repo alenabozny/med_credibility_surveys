@@ -56,6 +56,8 @@ docs/_build/
 target/
 
 # Articles
+.test_articles
+.test_articles_modified
 
 app.db
 app.db-journal
