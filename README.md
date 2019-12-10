@@ -38,11 +38,12 @@ haslo: test
     * [x] - kolejne taski losowe, nie kolejne
     * [x] - imie/nazwisko usera
     * [x] - usunac usuwanie usera
-    * [ ] - wczytywanie daty (funkcja) - ISO,  yyyy-mm-dd,  dd-mm-yyyy
     * [x] - wyswietlanie tresci zdania w admince
     * [x] - wyswietlanie tytulu artykulu w admince (przy taskach)
     * [x] - rózne wersje modyfikacji zdań (kopia artykułu)
     * [x] - w widoku użytkownika: możliwość zaznaczenia więcej niż jednego tasku i "odprzypisania" ich za jednym razem
     * [x] - addTask: wyświetlenie tylko tych zdań, które mają swój task
     * [x] - addTask: dla zaznaczonych checkboxem zdań przypisać taski z nimi powiązane edytowanemu użytkownikowi
-    
+    * [ ] - wczytywanie daty (funkcja) - ISO,  yyyy-mm-dd,  dd-mm-yyyy
+    * [ ] - REMOVE SELECTED TASKS nie powinno czyścić ocenę; zmienić nazwę na UNASSIGN SELECTED TASKS
+    * [ ] - steps powinno rozpoczynać się od 0, a nie od 1
