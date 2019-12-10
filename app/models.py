@@ -67,13 +67,13 @@ def handle_nonexistent(func):
     return wrapper
 
 
-class ModificationTypes(enum.Enum):
-    HEDGE = "hedging"
-    AHEDGE = "antihedging"
-    NEG = "negation"
-    HYPER = "hyperonymy"
-    HYPO = "hyponymy"
-    SYN = "synonymy"
+# class ModificationTypes(enum.Enum):
+#     HEDGE = "hedging"
+#     AHEDGE = "antihedging"
+#     NEG = "negation"
+#     HYPER = "hyperonymy"
+#     HYPO = "hyponymy"
+#     SYN = "synonymy"
 
 
 class Sentence(db.Model):
@@ -83,7 +83,7 @@ class Sentence(db.Model):
     sequence_nr = db.Column(db.Integer)  # position in the article
     to_evaluate = db.Column(db.Boolean)
     task = db.relationship('Task', backref='sentence')
-    modification = db.Column(db.Enum(ModificationTypes))
+    modification = db.Column(db.String(20))
 
     @handle_nonexistent
     def get_left_context(self, iterator):

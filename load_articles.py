@@ -71,16 +71,20 @@ def load_modified():
 
                     sentences = sent_tokenize(js["body"])
                     for i, s in enumerate(sentences):
-                        # HEDGE = "hedging"
-                        # AHEDGE = "antihedging"
-                        # NEG = "negation"
-                        # HYPER = "hyperonymy"
-                        # HYPO = "hyponymy"
-                        # SYN = "synonymy"
-                        reg = '\s*{{2}(?P<mod_type>HEDGE|AHEDGE|NEG|HYPER|HYPO|SYN)\}{2}'
+                        mod_types = {
+                            'HEDGE': "hedging",
+                            'AHEDGE': "antihedging",
+                            'NEG': "negation",
+                            'HYPER': "hyperonymy",
+                            'HYPO': "hyponymy",
+                            'SYN': "synonymy"
+                        }
+
+                        reg = '\s*{{2}(?P<type>HEDGE|AHEDGE|NEG|HYPER|HYPO|SYN)\}{2}'
                         try:
-                            modification = re.match(reg, s).group('mod_type')
-                            s = s.replace('{{'+modification+'}}', '')
+                            type = re.match(reg, s).group('type')
+                            s = s.replace('{{'+type+'}}', '')
+                            modification = mod_types[type]
                         except AttributeError:
                             modification = None
 
