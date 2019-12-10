@@ -93,7 +93,7 @@ def load_modified():
                             sequence_nr=i + 1,
                             to_evaluate=True,
                             article=article,
-                            modification=modification
+                            modif=modification
                         )
 
                         if modification:

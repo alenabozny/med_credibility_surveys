@@ -26,7 +26,7 @@
                             <td class="number">{{ sentence.sentence_id }}</td>
                             <td class="number">{{ sentence.sequence_nr }}</td>
                             <td class="sentence-body">{{ sentence.body }}</td>
-                            <td class="sentence-body">{{ sentence.modification.value }}</td>
+                            <td class="sentence-body">{{ sentence.modif }}</td>
                             <td>{{  sentence.task.__len__() }}</td>
                             <td>{% if sentence.task.__len__() != 0 %}
                                     {{ sentence.task[0].user  if sentence.task[0].user }}

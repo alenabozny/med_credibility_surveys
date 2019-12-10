@@ -84,6 +84,7 @@ class Sentence(db.Model):
     to_evaluate = db.Column(db.Boolean)
     task = db.relationship('Task', backref='sentence')
     modification = db.Column(db.String(20))
+    modif = db.Column(db.String(50))
 
     @handle_nonexistent
     def get_left_context(self, iterator):

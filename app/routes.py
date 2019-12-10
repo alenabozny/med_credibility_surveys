@@ -35,7 +35,7 @@ TAGS = [
 @login_required
 def index():
     tasks = Task.query.filter_by(
-        Task.user_id == current_user.id
+        user_id = current_user.id
     ).all()
 
     tasks_incomplete = Task.query.filter_by(
