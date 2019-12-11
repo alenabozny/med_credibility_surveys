@@ -35,7 +35,7 @@ checkboxes.forEach(checkbox => {
 });
 
 
-let context_index = 0;
+let context_index = 1;
 
 let renderSentences = [{
     txt: initSentence,
@@ -83,7 +83,7 @@ document.querySelector('#moreContext').addEventListener('click', (e) => {
         }
 
         context_index += 1;
-        document.querySelector('[name="steps"]').value = context_index;
+        document.querySelector('[name="steps"]').value = context_index - 1;
         sentencesToHTML(renderSentences);
         if (!sentences[context_index]) {
             e.currentTarget.disabled = true;
