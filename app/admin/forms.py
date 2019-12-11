@@ -17,7 +17,7 @@ class UserTaskForm(FlaskForm):
 class UserRemoveTasksForm(FlaskForm):
     user_id = HiddenField()
     tasks = MultiCheckboxField('Tasks', coerce=int, choices=[], validators=[])
-    submit = SubmitField('Remove selected tasks')
+    submit = SubmitField('Unassign selected tasks')
 
 
 class ChangePasswordForm(FlaskForm):

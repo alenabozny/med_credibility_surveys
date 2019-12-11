@@ -35,7 +35,7 @@ checkboxes.forEach(checkbox => {
 });
 
 
-let context_index = 1;
+let context_index = 0;
 
 let renderSentences = [{
     txt: initSentence,

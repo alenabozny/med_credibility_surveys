@@ -81,6 +81,11 @@ def remove_user_tasks():
     for task_id in form.tasks.data:
         task = Task.query.filter_by(task_id=task_id).first()
         task.user_id = None
+        task.steps = None
+        task.rate = None
+        task.time_start = None
+        task.time_end = None
+        task.reason = None
     db.session.commit()
     flash('Tasks were deleted')
 

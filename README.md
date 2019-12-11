@@ -45,5 +45,5 @@ haslo: test
     * [x] - addTask: wyświetlenie tylko tych zdań, które mają swój task
     * [x] - addTask: dla zaznaczonych checkboxem zdań przypisać taski z nimi powiązane edytowanemu użytkownikowi
     * [ ] - wczytywanie daty (funkcja) - ISO,  yyyy-mm-dd,  dd-mm-yyyy
-    * [ ] - REMOVE SELECTED TASKS nie powinno czyścić ocenę; zmienić nazwę na UNASSIGN SELECTED TASKS
-    * [ ] - steps powinno rozpoczynać się od 0, a nie od 1
+    * [x] - REMOVE SELECTED TASKS nie powinno czyścić ocenę; zmienić nazwę na UNASSIGN SELECTED TASKS
+    * [x] - steps powinno rozpoczynać się od 0, a nie od 1
