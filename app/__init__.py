@@ -3,11 +3,17 @@ from config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
+import sys
+import logging
 
 app = Flask(__name__)
 app.secret_key = 'super secret string'
 app.config.from_object(Config)
 app.static_folder = 'static'
+
+
+app.logger.addHandler(logging.StreamHandler(sys.stdout))
+app.logger.setLevel(logging.ERROR)
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
