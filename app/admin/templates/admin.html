@@ -49,7 +49,9 @@
                 {% endfor %}
             </tbody>
         </table>
-        <a href="{{ url_for('admin.user_add') }}">add new user</a>
+        <a href="{{ url_for('admin.user_add') }}" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-button--accent">
+            Add new user
+        </a>
         <h4>Articles ({{ articles.__len__() }})</h4>
         <table class="mdl-data-table mdl-data-table--selectable admin-user-table">
             <thead>
