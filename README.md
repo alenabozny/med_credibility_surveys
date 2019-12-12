@@ -47,3 +47,4 @@ haslo: test
     * [ ] - wczytywanie daty (funkcja) - ISO,  yyyy-mm-dd,  dd-mm-yyyy
     * [x] - REMOVE SELECTED TASKS nie powinno czyścić ocenę; zmienić nazwę na UNASSIGN SELECTED TASKS
     * [x] - steps powinno rozpoczynać się od 0, a nie od 1
+    * [ ] - kolumna tags w Tasku powinna przyjmować do 500 znaków
