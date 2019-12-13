@@ -134,8 +134,8 @@ class Task(db.Model):
     time_end = db.Column(db.DateTime)
     rate = db.Column(db.Enum(CredibilityRates))
     steps = db.Column(db.Integer)
-    tags = db.Column(db.String(200))
-    reason = db.Column(db.String(200))
+    tags = db.Column(db.String(500))
+    reason = db.Column(db.String(500))
 
     def __repr__(self):
         return '<Task for sentence "{}" from article {}.>'.format(self.sentence.body, self.sentence.article_id)
