@@ -33,6 +33,9 @@ def load_original():
                                 )
                     sentences = sent_tokenize(js["body"])
                     for i, s in enumerate(sentences):
+                        if len(s) > 1000:
+                            print(len(s))
+                            print(s)
                         sentence = Sentence(
                             body=s,
                             sequence_nr=i+1,
@@ -64,8 +67,8 @@ def load_modified():
                 if js["title"] in article_titles and ("COPY " + js["title"]) not in article_titles:
                     article = Article(
                                     title="COPY " + js["title"],
-                                    pub_date='', #dateparser.parse(str(js["pub_date"])),
-                                    access_date='', #dateparser.parse(str(js["access_date"])),
+                                    pub_date=dateparser.parse(str(js["pub_date"])),
+                                    access_date=dateparser.parse(str(js["access_date"])),
                                     url=js["url"],
                                     query=js["query"]
                                 )
