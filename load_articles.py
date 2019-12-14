@@ -25,10 +25,11 @@ def load_original():
                 if js["title"] not in article_titles:
                     article = Article(
                                     title=js["title"],
-                                    pub_date=dateparser.parse(js["pub_date"]),
-                                    access_date=dateparser.parse(js["access_date"]),
+                                    pub_date=dateparser.parse(str(js["pub_date"])),
+                                    access_date=dateparser.parse(str(js["access_date"])),
                                     url=js["url"],
-                                    query=js["query"]
+                                    query=js["query"],
+                                    keywords=js["keywords"]
                                 )
                     sentences = sent_tokenize(js["body"])
                     for i, s in enumerate(sentences):
@@ -63,8 +64,8 @@ def load_modified():
                 if js["title"] in article_titles and ("COPY " + js["title"]) not in article_titles:
                     article = Article(
                                     title="COPY " + js["title"],
-                                    pub_date=dateparser.parse(js["pub_date"]),
-                                    access_date=dateparser.parse(js["access_date"]),
+                                    pub_date='', #dateparser.parse(str(js["pub_date"])),
+                                    access_date='', #dateparser.parse(str(js["access_date"])),
                                     url=js["url"],
                                     query=js["query"]
                                 )
