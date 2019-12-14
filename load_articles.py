@@ -22,9 +22,17 @@ def load_original():
         if filename.endswith('.json'):
             with open(os.path.join('articles', filename)) as json_file:
                 js = json.load(json_file)
-                if js["title"] not in article_titles:
+
+                title = js['title']
+                if len(title) > 150:
+                    title = title[0:149]
+
+                if title not in article_titles:
+                    if len(js['url'])>150:
+                        print(filename)
+
                     article = Article(
-                                    title=js["title"],
+                                    title=title,
                                     pub_date=dateparser.parse(str(js["pub_date"])),
                                     access_date=dateparser.parse(str(js["access_date"])),
                                     url=js["url"],
@@ -33,9 +41,6 @@ def load_original():
                                 )
                     sentences = sent_tokenize(js["body"])
                     for i, s in enumerate(sentences):
-                        if len(s) > 1000:
-                            print(len(s))
-                            print(s)
                         sentence = Sentence(
                             body=s,
                             sequence_nr=i+1,
@@ -64,9 +69,17 @@ def load_modified():
         if filename.endswith('.json'):
             with open(os.path.join('articles_modified', filename)) as json_file:
                 js = json.load(json_file)
-                if js["title"] in article_titles and ("COPY " + js["title"]) not in article_titles:
+
+                title = "COPY " + js["title"]
+                if len(title) > 150:
+                    title = title[0:149]
+
+                if js["title"] in article_titles and title not in article_titles:
+                    if len(js['url'])>150:
+                        print("Too long url: " + filename)
+
                     article = Article(
-                                    title="COPY " + js["title"],
+                                    title=title,
                                     pub_date=dateparser.parse(str(js["pub_date"])),
                                     access_date=dateparser.parse(str(js["access_date"])),
                                     url=js["url"],
@@ -75,6 +88,8 @@ def load_modified():
 
                     sentences = sent_tokenize(js["body"])
                     for i, s in enumerate(sentences):
+                        if len(s)>1000:
+                            print("Too long sentence: " + filename)
                         mod_types = {
                             'HEDGE': "hedging",
                             'AHEDGE': "antihedging",
