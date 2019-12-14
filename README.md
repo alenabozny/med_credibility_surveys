@@ -44,7 +44,7 @@ haslo: test
     * [x] - w widoku użytkownika: możliwość zaznaczenia więcej niż jednego tasku i "odprzypisania" ich za jednym razem
     * [x] - addTask: wyświetlenie tylko tych zdań, które mają swój task
     * [x] - addTask: dla zaznaczonych checkboxem zdań przypisać taski z nimi powiązane edytowanemu użytkownikowi
-    * [ ] - wczytywanie daty (funkcja) - ISO,  yyyy-mm-dd,  dd-mm-yyyy
+    * [x] - wczytywanie daty (funkcja) - ISO,  yyyy-mm-dd,  dd-mm-yyyy
     * [x] - REMOVE SELECTED TASKS nie powinno czyścić ocenę; zmienić nazwę na UNASSIGN SELECTED TASKS
     * [x] - steps powinno rozpoczynać się od 0, a nie od 1
     * [x] - kolumna tags w Tasku powinna przyjmować do 500 znaków (na prod ustawiono ręcznie)
