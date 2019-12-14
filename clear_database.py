@@ -9,9 +9,9 @@ def clear():
     article = db.Table('article', meta)
     sentence = db.Table('sentence', meta)
     task = db.Table('task', meta)
-    user = db.Table('user', meta)
+    # user = db.Table('user', meta)
 
-    for table in [task, sentence, article, user]:
+    for table in [task, sentence, article]:
         print('Clear table %s' % table)
         db.session.execute(table.delete())
     db.session.commit()

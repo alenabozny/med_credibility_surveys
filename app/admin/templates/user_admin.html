@@ -47,12 +47,13 @@
                     <th>time_end</th>
                     <th>rate</th>
                     <th class="number">steps</th>
-                    <th>tags</th>
-                    <th>reason</th>
+                    <!--<th>tags</th>-->
+                    <!--<th>reason</th>-->
                     <th></th>
                 </tr>
                 </thead>
                 <tbody>
+
                 {% for task in user.tasks %}
                     <tr>
                         <td>
@@ -65,9 +66,10 @@
                         <td>{{ task.time_end.strftime('%Y-%m-%d %H:%M:%S') if task.time_end }}</td>
                         <td>{{ task.rate.value if task.rate }}</td>
                         <td class="number">{{ task.steps if task.steps }}</td>
-                        <td>{{ task.tags if task.tags }}</td>
-                        <td>{{ task.reason if task.reason }}</td>
+                        <!--<td>{{ task.tags if task.tags }}</td>-->
+                        <!--<td>{{ task.reason if task.reason }}</td>-->
                         <td>
+
                             {% if(task.rate) %}
                                 <a href="{{ url_for('admin.clear_task', user_id=user.id, task_id=task.task_id) }}">Clear</a>
                             {% endif %}
