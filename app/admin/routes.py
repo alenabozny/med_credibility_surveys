@@ -150,11 +150,9 @@ def add_tasks(user_id):
         # for i in filtered_articles:
         #     unassinged_tasks_num = 0
         #     for s in i.sentences:
-        #         task = Task.query.filter_by(sentence_id=s.sentence_id).first()
-        #         if task:
-        #             if not task.user_id:
+        #         if s.task:
+        #             if not s.task[0].user_id:
         #                 unassinged_tasks_num += 1
-
             # form.article.choices.append((i.article_id, i.title + " (Unassigned: " + str(unassinged_tasks_num)))
 
 
