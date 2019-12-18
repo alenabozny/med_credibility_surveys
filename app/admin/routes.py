@@ -144,17 +144,21 @@ def add_tasks(user_id):
         articles = Article.query.filter(Article.title is not None).all()
 
         filtered_articles = filter(lambda article: article.sentences.__len__() > 0, articles)
-        form.article.choices = [(i.article_id, i.title) for i in filtered_articles]
 
-        # form.article.choices = []
-        # for i in filtered_articles:
-        #     unassinged_tasks_num = 0
-        #     for s in i.sentences:
-        #         if s.task:
-        #             if not s.task[0].user_id:
-        #                 unassinged_tasks_num += 1
-            # form.article.choices.append((i.article_id, i.title + " (Unassigned: " + str(unassinged_tasks_num)))
+        for f_art in filtered_articles:
+            q = db.session.execute("SELECT * FROM Sentence \
+                                JOIN Article ON Sentence.article_id=Article.article_id \
+                                JOIN Task ON Sentence.sentence_id=Task.sentence_id \
+                                WHERE Article.article_id=:id \
+                                AND Task.user_id IS NULL",
+                                {"id": f_art.article_id}
+                               )
 
+            unassigned_sentences = len([x for x in q])
+            form.article.choices.append(
+                                            (f_art.article_id, f_art.title + \
+                                            " (Unassigned: " + str(unassigned_sentences) + ")")
+                                        )
 
     if form.article.data is not None:
         tasks = Task.query.filter(Task.sentence.has(article_id=form.article.data))
