@@ -155,7 +155,8 @@ def add_tasks(user_id):
                                )
 
             unassigned_sentences = len([x for x in q])
-            form.article.choices.append(
+            if unassigned_sentences != 0:
+                form.article.choices.append(
                                             (f_art.article_id, f_art.title + \
                                             " (Unassigned: " + str(unassigned_sentences) + ")")
                                         )
