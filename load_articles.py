@@ -53,6 +53,7 @@ def load_original():
                         )
                         db.session.add(task)
                     db.session.commit()
+                    print("LOADED - " + js["title"])
                 else:
                     print("Article \"" + js["title"] + "\" is already in a database.")
         else:
