@@ -48,3 +48,9 @@ haslo: test
     * [x] - REMOVE SELECTED TASKS nie powinno czyścić ocenę; zmienić nazwę na UNASSIGN SELECTED TASKS
     * [x] - steps powinno rozpoczynać się od 0, a nie od 1
     * [x] - kolumna tags w Tasku powinna przyjmować do 500 znaków (na prod ustawiono ręcznie)
+
+REVIEW
+ * [ ] tabela Review + powiązania z użytkownikiem i taskiem
+ * [ ] rola użytkownika is_reviewer
+ * [ ] widok dodawania nowego Review
+ * [ ] dodać 'category' do Article
