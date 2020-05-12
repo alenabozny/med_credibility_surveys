@@ -1,8 +1,8 @@
-"""article user sentence task tables
+"""empty message
 
-Revision ID: 2a05c8df2906
+Revision ID: c9775661cbaa
 Revises: 
-Create Date: 2019-10-31 15:32:27.199369
+Create Date: 2020-03-18 20:07:29.106527
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '2a05c8df2906'
+revision = 'c9775661cbaa'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -24,7 +24,8 @@ def upgrade():
     sa.Column('access_date', sa.Date(), nullable=True),
     sa.Column('url', sa.String(length=150), nullable=True),
     sa.Column('title', sa.String(length=150), nullable=True),
-    sa.Column('query', sa.String(length=100), nullable=True),
+    sa.Column('queryTxt', sa.String(length=100), nullable=True),
+    sa.Column('keywords', sa.String(length=200), nullable=True),
     sa.PrimaryKeyConstraint('article_id')
     )
     op.create_table('user',
@@ -32,6 +33,9 @@ def upgrade():
     sa.Column('username', sa.String(length=64), nullable=True),
     sa.Column('email', sa.String(length=120), nullable=True),
     sa.Column('password_hash', sa.String(length=128), nullable=True),
+    sa.Column('name', sa.String(length=128), nullable=True),
+    sa.Column('surname', sa.String(length=128), nullable=True),
+    sa.Column('is_admin', sa.Boolean(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
     with op.batch_alter_table('user', schema=None) as batch_op:
@@ -44,6 +48,8 @@ def upgrade():
     sa.Column('article_id', sa.Integer(), nullable=True),
     sa.Column('sequence_nr', sa.Integer(), nullable=True),
     sa.Column('to_evaluate', sa.Boolean(), nullable=True),
+    sa.Column('modification', sa.String(length=20), nullable=True),
+    sa.Column('modif', sa.String(length=50), nullable=True),
     sa.ForeignKeyConstraint(['article_id'], ['article.article_id'], ),
     sa.PrimaryKeyConstraint('sentence_id')
     )
@@ -54,6 +60,9 @@ def upgrade():
     sa.Column('time_start', sa.DateTime(), nullable=True),
     sa.Column('time_end', sa.DateTime(), nullable=True),
     sa.Column('rate', sa.Enum('CRED', 'NONCRED', 'NEU', name='credibilityrates'), nullable=True),
+    sa.Column('steps', sa.Integer(), nullable=True),
+    sa.Column('tags', sa.String(length=500), nullable=True),
+    sa.Column('reason', sa.String(length=500), nullable=True),
     sa.ForeignKeyConstraint(['sentence_id'], ['sentence.sentence_id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
     sa.PrimaryKeyConstraint('task_id'),

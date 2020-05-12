@@ -1,6 +1,58 @@
 {% extends "base.html" %}
 
 {% block content %}
+    
+    <div class="mdl-card mdl-shadow--2dp mdl-color--white" id="request-dataset">
+        <div class="mdl-card__title">
+            <h2 class="mdl-card__title-text">Request dataset</h2>
+        </div>
+
+        <div class="mdl-card__supporting-text">
+
+            <p class="request">
+                Dataset, as well as an access to the tagging tool, is available upon request. Please contact Aleksandra Nabożny (<a href="">alenaboz@pg.edu.pl</a>).
+            </p>
+
+            Credibility of the medical web content Dataset consists of over 10,000 sentences tagged by human experts (medical professionals).
+
+            Articles collected manually from various e-health websites were divided into individual sentences. Each sentence was tagged by an expert with the following set of labels:
+            <ul>
+                <li style="color: #2ca02c">CRED (credible) - is reliable, does not raise major objections, contains verifiable information from the medical domain;</li>
+                <li style="color: #ff7f0e">NONCRED (not credible) - contains false or unverifiable information; contains persuasion contrary to current medical recommendations; contains outdated information;</li>
+                <li style="color: #1f77b4">NEU (neutral) - does not contain information (eg. is a question); is not related to medicine;</li>
+            </ul>
+
+            The full dataset consists of some additional data:
+            <ul>
+                <li>(time_start/time_end) Time of the assessment</li>
+                <li>(steps) Width of the context window that was needed for the expert to assess one sentence (integer varying from 0 to 7, when 0 means that no additional context was needed, and 7 meant that 7 preceding and 7 following sentences from the original text were needed)</li>
+<!--                 <li>Expert's reason for selecting the NONCRED label</li>
+ -->            </ul>
+
+            <br>
+            <p style='margin: 20px; font-weight: bold;'>Dataset statistics:</p>
+            <br>
+            <img src="../static/images/ds_statistics.png" class='imgfit'>
+            <br>
+            <p class="caption">
+                Number above the bar is the number of sentences from within the given category. Percentages represent the disributions of labeles within given category.
+            </p>
+
+            <br>
+
+            <p style='margin: 20px; font-weight: bold;'>Exemplary data:</p>
+            <br>
+            <img src="../static/images/head.png" class='imgfit'>
+
+            <br>
+            <br>
+            <br>
+            <br>
+
+            The Dataset collection was funded by Polish Ministry of Higher Education and Polish-Japaneese Academy of Information Technology.
+
+        </div>
+    </div>
 
     <div class="mdl-card mdl-shadow--2dp mdl-color--white">
         <div class="mdl-card__title">
@@ -21,5 +73,6 @@
                 <p>{{ form.submit(class_="mdl-button mdl-js-button mdl-button--raised mdl-button--colored") }}</p>
             </div>
         </form>
+        <img src="../static/images/pjatk.jpeg" style="width: 30%;margin: 0 36%0px;">
     </div>
 {% endblock %}

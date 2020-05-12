@@ -5,6 +5,29 @@ body {
  line-height:20px
 }
 
+#request-dataset {
+    width: 800px;
+}
+
+.request {
+   font-style: "Lato"; 
+   font-size: 16px
+   font-weight: lighter;
+}
+
+.caption {
+    font-size: 11px;
+    text-align: center;
+}
+
+.blue {
+    color: blue;
+}
+
+.imgfit {
+    width: 100%;
+}
+
 .page-content {
     display: flex;
     justify-content: center;
