@@ -14,6 +14,7 @@ class User(UserMixin, db.Model):
     surname = db.Column(db.String(128))
     is_admin = db.Column(db.Boolean, default=False)
     tasks = db.relationship('Task', backref='user')
+    second_tasks = db.relationship('SecondTask', backref='user')
 
     @property
     def password(self):
@@ -83,6 +84,7 @@ class Sentence(db.Model):
     sequence_nr = db.Column(db.Integer)  # position in the article
     to_evaluate = db.Column(db.Boolean)
     task = db.relationship('Task', backref='sentence')
+    second_task = db.relationship('SecondTask', backref='sentence')
     modification = db.Column(db.String(20))
     modif = db.Column(db.String(50))
 
@@ -139,3 +141,24 @@ class Task(db.Model):
 
     def __repr__(self):
         return '<Task for sentence "{}" from article {}.>'.format(self.sentence.body, self.sentence.article_id)
+
+class SecondTask(db.Model):
+    s_task_id = db.Column(db.Integer, primary_key=True)
+    sentence_id = db.Column(db.Integer, db.ForeignKey('sentence.sentence_id'), unique=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    time_start = db.Column(db.DateTime)
+    time_end = db.Column(db.DateTime)
+    rate = db.Column("rate", db.Enum("credible", 
+                                     "noncredible",
+                                     "neutral/irrelevant",
+                                    name="credrate_enum", create_type=False))
+    steps = db.Column(db.Integer)
+    tags = db.Column("tags", db.Enum("slippery_slope", 
+                                     "alleged_negative_consequences",
+                                     "twisting_word",
+                                     "hedging", 
+                                    name="tags_enum", create_type=False))
+    own_reason = db.Column(db.String(500))
+
+    def __repr__(self):
+        return '<SecondTask for sentence "{}" from article {}.>'.format(self.sentence.body, self.sentence.article_id)

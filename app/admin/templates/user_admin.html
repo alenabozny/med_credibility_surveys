@@ -32,6 +32,8 @@
         </tbody>
     </table>
 
+<!-- Fisrt task section -->
+
     <h4>Tasks ({{ user.tasks.__len__() }})</h4>
     {%  if user.tasks.__len__() > 0 %}
         <form action="{{ url_for('admin.remove_user_tasks') }}" method="post" novalidate>
@@ -82,6 +84,59 @@
         </form>
     {% endif %}
     <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-button--accent" href="{{ url_for('admin.add_tasks', user_id=user.id) }}">Add tasks</a>
+
+<!-- second task section -->
+
+
+    <h4>Second Tasks ({{ user.second_tasks.__len__() }})</h4>
+    {%  if user.second_tasks.__len__() > 0 %}
+        <form action="{{ url_for('admin.remove_user_second_tasks') }}" method="post" novalidate>
+            {{ removeForm.hidden_tag() }}
+            <table class="mdl-data-table admin-user-table">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th class="number">ID</th>
+                    <th>article</th>
+                    <th>sentence</th>
+                    <th>time_start</th>
+                    <th>time_end</th>
+                    <th>rate</th>
+                    <th class="number">steps</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+
+                {% for second_task in user.second_tasks %}
+                    <tr>
+                        <td>
+                            <input name="second_tasks" type="checkbox" value="{{ second_task.s_task_id }}">
+                        </td>
+                        <td class="number">{{ second_task.task_id }}</td>
+                        <td class="sentence-body"><a href="{{ url_for('admin.article_details', article_id=second_task.sentence.article.article_id) }}">{{ second_task.sentence.article.title }}</a></td>
+                        <td class="sentence-body">{{ second_task.sentence.body }}</td>
+                        <td>{{ second_task.time_start.strftime('%Y-%m-%d %H:%M:%S') if second_task.time_start }}</td>
+                        <td>{{ second_task.time_end.strftime('%Y-%m-%d %H:%M:%S') if second_task.time_end }}</td>
+                        <td>{{ second_task.rate.value if second_task.rate }}</td>
+                        <td class="number">{{ second_task.steps if second_task.steps }}</td>
+                        <td>
+
+                            {% if(second_task.rate) %}
+                                <a href="{{ url_for('admin.clear_task', user_id=user.id, s_task_id=second_task.s_task_id) }}">Clear</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+                {{ removeForm.submit(class_="mdl-button mdl-js-button mdl-button--raised mdl-button--colored") }}
+        </form>
+    {% endif %}
+    <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-button--accent" href="{{ url_for('admin.add_second_tasks', user_id=user.id) }}">Add second tasks</a>
+
+<!-- Change password section -->
+
     <h4>Change password</h4>
     <form action="{{ url_for('admin.change_password') }}" method="post" novalidate>
         {{ form.hidden_tag() }}

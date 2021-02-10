@@ -4,8 +4,8 @@ from sqlalchemy import null, and_, not_, or_
 from app import db
 from app.admin import bp_admin
 from app.admin.admin_required import admin_required
-from app.admin.forms import UserTaskForm, ChangePasswordForm, RegisterForm, EditSentenceForm, UserRemoveTasksForm
-from app.models import Task, User, Article, Sentence
+from app.admin.forms import UserSecondTaskForm, UserTaskForm, ChangePasswordForm, RegisterForm, EditSentenceForm, UserRemoveTasksForm, UserRemoveSecondTasksForm
+from app.models import SecondTask, Task, User, Article, Sentence
 
 
 @bp_admin.route('/')
@@ -77,6 +77,7 @@ def user_details(user_id):
 @admin_required
 def remove_user_tasks():
     form = UserRemoveTasksForm(request.form)
+    print(form.tasks)
 
     for task_id in form.tasks.data:
         task = Task.query.filter_by(task_id=task_id).first()
@@ -87,7 +88,26 @@ def remove_user_tasks():
         task.time_end = None
         task.reason = None
     db.session.commit()
-    flash('Tasks were deleted')
+    flash('Tasks were cleared')
+
+    return redirect(url_for('admin.user_details', user_id=form.user_id.data))
+
+@bp_admin.route('/removeUserSecondTasks', methods=['POST'])
+@admin_required
+def remove_user_second_tasks():
+    form = UserRemoveSecondTasksForm(request.form)
+    print(form.second_tasks.data)
+
+    for s_task_id in form.second_tasks.data:
+        s_task = SecondTask.query.filter_by(s_task_id=s_task_id).first()
+        s_task.user_id = None
+        s_task.steps = None
+        s_task.rate = None
+        s_task.time_start = None
+        s_task.time_end = None
+        s_task.own_reason = None
+    db.session.commit()
+    flash('Second Tasks were cleared')
 
     return redirect(url_for('admin.user_details', user_id=form.user_id.data))
 
@@ -181,6 +201,81 @@ def add_tasks(user_id):
         user=user,
         disabledOptions=list(map(lambda task: task.task_id, disabledOptions)),
         checkedOptions=list(map(lambda task: task.task_id, checkedOptions))
+    )
+
+@bp_admin.route('/user/<int:user_id>/addSecondTasks', methods=['GET', 'POST'])
+@admin_required
+def add_second_tasks(user_id):
+    form = UserSecondTaskForm(request.form)
+    user = User.query.filter_by(id=user_id).first()
+    disabledOptions = []
+    checkedOptions = []
+
+    if form.sentences.data.__len__() != 0:
+        second_tasks = SecondTask.query.filter(
+            and_(
+                SecondTask.sentence.has(article_id=form.article.data),
+                SecondTask.user_id == user_id,
+                SecondTask.steps.is_(None)
+            )
+        ).all()
+
+        for second_task in second_tasks:
+            print(second_task)
+            second_task.user_id = None
+
+        for id in form.sentences.data:
+            second_task = SecondTask.query.filter(SecondTask.s_task_id == id).first()
+            second_task.user_id = user_id
+
+        db.session.commit()
+        flash('changed')
+        return redirect(url_for('admin.user_details', user_id=user_id))
+
+    if form.article.data is None:
+        articles = Article.query.filter(Article.title is not None).all()
+
+        filtered_articles = filter(lambda article: article.sentences.__len__() > 0, articles)
+
+        for f_art in filtered_articles:
+            q = db.session.execute("SELECT * FROM Sentence \
+                                JOIN Article ON Sentence.article_id=Article.article_id \
+                                JOIN second_task ON Sentence.sentence_id=second_task.sentence_id \
+                                WHERE Article.article_id=:id \
+                                AND second_task.user_id IS NULL",
+                                {"id": f_art.article_id}
+                               )
+
+            unassigned_sentences = len([x for x in q])
+            if unassigned_sentences != 0:
+                form.article.choices.append(
+                                            (f_art.article_id, f_art.title + \
+                                            " (Unassigned: " + str(unassigned_sentences) + ")")
+                                        )
+
+    if form.article.data is not None:
+        second_tasks = SecondTask.query.filter(SecondTask.sentence.has(article_id=form.article.data))
+
+        form.sentences.choices = [
+            (second_task.s_task_id, second_task.sentence.body) for second_task in second_tasks.all()
+            ]
+        disabledOptions = second_tasks.filter(
+                                            or_(
+                                                SecondTask.user_id != user_id,
+                                                and_(SecondTask.user_id == user_id, 
+                                                not_(SecondTask.steps.is_(None)))
+                                                )
+                                            ).all()
+        checkedOptions = second_tasks.filter(
+                                            and_(SecondTask.user_id == user_id)
+                                        ).all()
+
+    return render_template(
+        'add_task_admin.html',
+        form=form,
+        user=user,
+        disabledOptions=list(map(lambda task: second_task.s_task_id, disabledOptions)),
+        checkedOptions=list(map(lambda task: secodn_task.s_task_id, checkedOptions))
     )
 
 

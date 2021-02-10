@@ -13,11 +13,20 @@ class UserTaskForm(FlaskForm):
     sentences = MultiCheckboxField('Sentences', coerce=int, choices=[], validators=[])
     submit = SubmitField('Next')
 
+class UserSecondTaskForm(FlaskForm):
+    article = SelectField('Article', choices=[], coerce=int)
+    sentences = MultiCheckboxField('Sentences', coerce=int, choices=[], validators=[])
+    submit = SubmitField('Next')
 
 class UserRemoveTasksForm(FlaskForm):
     user_id = HiddenField()
     tasks = MultiCheckboxField('Tasks', coerce=int, choices=[], validators=[])
     submit = SubmitField('Unassign selected tasks')
+
+class UserRemoveSecondTasksForm(FlaskForm):
+    user_id = HiddenField()
+    second_tasks = MultiCheckboxField('SecondTasks', coerce=int, choices=[], validators=[])
+    submit = SubmitField('Unassign selected second tasks')
 
 
 class ChangePasswordForm(FlaskForm):
