@@ -2,7 +2,7 @@
 
 {% block content %}
     <div class="home-container">
-        <!-- <div id="first-task-manager" style="display: {% if nextTask == None %} none; {% endif %}"> -->
+        <div id="first-task-manager" style="display: {% if nextTask == None %} none; {% endif %}">
             {%  if nextTask %}
                 <a href="{{ url_for('perform_task', task_id = nextTask.task_id) }}" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">
                     Evaluate next sentence
@@ -12,7 +12,7 @@
             <h4>Your completed evaluations: {{ completed_tasks_len }} out of {{ total_tasks_len }} </h4>
 
             <progress class="progress-bar" max="{{ total_tasks_len }}" value="{{ completed_tasks_len }}"></progress>            
-        <!-- </div> -->
+        </div>
         <div id="second-task-manager">
             {%  if next_second_task %}
                 <a href="{{ url_for('perform_second_task', s_task_id = next_second_task.s_task_id) }}" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">

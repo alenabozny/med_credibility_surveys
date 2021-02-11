@@ -118,12 +118,12 @@
                         <td class="sentence-body">{{ second_task.sentence.body }}</td>
                         <td>{{ second_task.time_start.strftime('%Y-%m-%d %H:%M:%S') if second_task.time_start }}</td>
                         <td>{{ second_task.time_end.strftime('%Y-%m-%d %H:%M:%S') if second_task.time_end }}</td>
-                        <td>{{ second_task.rate.value if second_task.rate }}</td>
+                        <td>{{ second_task.rate if second_task.rate }}</td>
                         <td class="number">{{ second_task.steps if second_task.steps }}</td>
                         <td>
 
                             {% if(second_task.rate) %}
-                                <a href="{{ url_for('admin.clear_task', user_id=user.id, s_task_id=second_task.s_task_id) }}">Clear</a>
+                                <a href="{{ url_for('admin.clear_second_task', user_id=user.id, s_task_id=second_task.s_task_id) }}">Clear</a>
                             {% endif %}
                         </td>
                     </tr>

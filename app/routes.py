@@ -166,4 +166,58 @@ def perform_task(task_id):
 @app.route('/second_task/<int:s_task_id>', methods=['GET', 'POST'])
 @login_required
 def perform_second_task(s_task_id):
-    return("Welcome to the second task round. Secondary Task Index: " + str(s_task_id))
+    # return("Welcome to the second task round. Secondary Task Index: " + str(s_task_id))
+    if request.method == 'GET':
+        task = SecondTask.query.filter_by(s_task_id=s_task_id, user_id=current_user.id).first()
+
+        if task.time_end:
+            flash('Your task was expired')
+            return redirect(url_for('index'))
+
+        try:
+            keywords = task.sentence.article.keywords.split(', ')
+        except AttributeError:
+            keywords = ""
+
+        return render_template(
+            'task.html',
+            title='SecondTask',
+            sentences=task.sentence.get_context_sentences(),
+            options=["credible", 
+                     "noncredible",
+                     "neutral/irrelevant"],
+            sentence=task.sentence,
+            keywords=keywords,
+            tags=["slippery_slope", 
+                  "alleged_negative_consequences",
+                  "twisting_word",
+                  "hedging"]
+        )
+    if request.method == 'POST':
+        time_start = request.form['time_start']
+        time_end = request.form['time_end']
+        rate = request.form['rate']
+        steps = request.form['steps']
+        tags = request.form.getlist('tag')
+        own_reason = request.form['reason']
+
+        second_task = SecondTask.query.filter_by(s_task_id=s_task_id, user_id=current_user.id).first()
+        second_task.time_start = datetime.fromtimestamp(int(time_start) / 1000)
+        second_task.time_end = datetime.fromtimestamp(int(time_end) / 1000)
+        second_task.rate = rate
+        second_task.tags = ','.join(tags) if tags != [] else None
+        second_task.steps = int(steps)
+        second_task.own_reason = own_reason
+
+        db.session.commit()
+
+        nextTask = SecondTask.query.filter_by(
+            user_id=current_user.id,
+            rate=None
+        ).order_by(func.random()).first()
+
+        if nextTask:
+            return redirect(url_for('perform_second_task', s_task_id=nextTask.s_task_id))
+        else:
+            flash('Thanks. You do not have any pending tasks')
+            return redirect(url_for('index'))

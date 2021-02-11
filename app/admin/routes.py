@@ -313,6 +313,19 @@ def clear_task(user_id, task_id):
 
     return redirect(url_for('admin.user_details', user_id=user_id))
 
+@bp_admin.route('/user/<int:user_id>/clearSecondTask/<int:s_task_id>')
+@admin_required
+def clear_second_task(user_id, s_task_id):
+    second_task = SecondTask.query.filter_by(s_task_id=s_task_id, user_id=user_id).first()
+    second_task.rate = null()
+    second_task.tags = null()
+    second_task.time_end = null()
+    second_task.time_start = null()
+    second_task.steps = null()
+    second_task.own_reason = null()
+    db.session.commit()
+
+    return redirect(url_for('admin.user_details', user_id=user_id))
 
 @bp_admin.route('/article/<int:article_id>')
 @admin_required

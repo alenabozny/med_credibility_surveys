@@ -48,10 +48,13 @@
                 </div>
                 <div id="tags" class="hide">
                     <h4>Select reason</h4>
+                    <p>{{ task.__class__.__name__ }}</p>
                     <ul style="list-style-type:none;">
                         {% for tag in tags %}
                             <li class="tag" for="{{tag}}">
-                                <input type="checkbox"
+                                <input type={% if title == 'SecondTask' %} "radio" 
+                                            {% else %} "checkbox"
+                                             {% endif %}
                                        id="{{tag}}"
                                        name="tag"
                                        class="mdl-radio__button"
