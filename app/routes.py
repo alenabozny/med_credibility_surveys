@@ -2,7 +2,7 @@ from flask import render_template
 from flask import request, redirect, url_for, flash
 from app import app, db
 from app.forms import LoginForm
-from app.models import Task, User, CredibilityRates
+from app.models import Task, User, CredibilityRates, SecondTask
 from flask_login import current_user, login_user, login_required, logout_user
 from datetime import datetime
 from sqlalchemy import func, and_, not_
@@ -38,7 +38,16 @@ def index():
         user_id = current_user.id
     ).all()
 
+    second_tasks = SecondTask.query.filter_by(
+        user_id = current_user.id
+    ).all()
+
     tasks_incomplete = Task.query.filter_by(
+        user_id=current_user.id,
+        rate=None
+    ).all()
+
+    second_tasks_incomplete = SecondTask.query.filter_by(
         user_id=current_user.id,
         rate=None
     ).all()
@@ -46,7 +55,15 @@ def index():
     completed_tasks_len = tasks.__len__() - tasks_incomplete.__len__()
     total_tasks_len = tasks.__len__()
 
+    completed_second_tasks_len = second_tasks.__len__() - second_tasks_incomplete.__len__()
+    total_second_tasks_len = second_tasks.__len__()
+
     nextTask = Task.query.filter_by(
+        user_id=current_user.id,
+        rate=None
+    ).first()
+
+    next_second_task = SecondTask.query.filter_by(
         user_id=current_user.id,
         rate=None
     ).first()
@@ -55,9 +72,13 @@ def index():
         'index.html',
         title='Home',
         tasks=tasks,
+        second_tasks=second_tasks,
         completed_tasks_len=completed_tasks_len,
+        completed_second_tasks_len=completed_second_tasks_len,
         total_tasks_len=total_tasks_len,
-        nextTask=nextTask
+        total_second_tasks_len=total_second_tasks_len,
+        nextTask=nextTask,
+        next_second_task=next_second_task
     )
 
 
@@ -141,3 +162,8 @@ def perform_task(task_id):
         else:
             flash('Thanks. You do not have any pending tasks')
             return redirect(url_for('index'))
+
+@app.route('/second_task/<int:s_task_id>', methods=['GET', 'POST'])
+@login_required
+def perform_second_task(s_task_id):
+    return("Welcome to the second task round. Secondary Task Index: " + str(s_task_id))
