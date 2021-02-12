@@ -58,9 +58,27 @@
                                        id="{{tag}}"
                                        name="tag"
                                        class="mdl-radio__button"
-                                       value="{{ tag }}"
+                                       value={{ tag }}
                                 >
-                                <label for="{{ tag }}" class="tag">{{tag}}</label>
+                                <label for="{{ tag }}" class="tag">
+                                       {% if tag == 'slippery_slope' %} 
+
+                                       <b>Slippery</b> slope: the sentence is factually true, but the consequences of the presented fact are exaggerated.
+
+                                       {% elif tag == 'alleged_negative_consequences' %}
+
+                                       <b>Alleged negative consequences</b> - the sentence is mostly factually true, but given the context of expert’s experience, there is a risk that the presented information may lead the patient to act contrary to current medical guidelines.
+
+                                       {% elif tag == 'hedging' %}
+
+                                       <b>Hedging</b> - the sentence is factually incorrect, but there is a part of it that softens the overtone of the presented statement.
+
+                                       {% else %}
+
+                                       <b>Twisting word</b> - the presence of a single word changes the overtone of the sentence.
+
+                                       {% endif %}
+                                </label>
                             </li>
                         {%  endfor %}
                     </ul>
