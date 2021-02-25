@@ -274,8 +274,8 @@ def add_second_tasks(user_id):
         'add_task_admin.html',
         form=form,
         user=user,
-        disabledOptions=list(map(lambda task: second_task.s_task_id, disabledOptions)),
-        checkedOptions=list(map(lambda task: second_task.s_task_id, checkedOptions))
+        disabledOptions=list(map(lambda second_task: second_task.s_task_id, disabledOptions)),
+        checkedOptions=list(map(lambda second_task: second_task.s_task_id, checkedOptions))
     )
 
 
