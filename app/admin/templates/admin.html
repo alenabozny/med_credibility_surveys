@@ -14,6 +14,7 @@
                     <th>Surname</th>
                     <th>Email</th>
                     <th>Tasks</th>
+                    <th>SecTasks</th>
                     <th>Admin</th>
                     <th></th>
                 </tr>
@@ -27,6 +28,7 @@
                         <td>{{ user.surname if user.surname }}</td>
                         <td><a href="mailto:{{ user.email }}">{{ user.email }}</a></td>
                         <td>{{ user.tasks.__len__()  }}</td>
+                        <td>{{ user.second_tasks.__len__() }}</td>
                         <td>
                             {% if(user.is_admin) %}
                                 <input type="checkbox" class="mdl-checkbox__input" checked disabled/>
