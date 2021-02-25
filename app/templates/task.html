@@ -48,7 +48,6 @@
                 </div>
                 <div id="tags" class="hide">
                     <h4>Select reason</h4>
-                    <p>{{ task.__class__.__name__ }}</p>
                     <ul style="list-style-type:none;">
                         {% for tag in tags %}
                             <li class="tag" for="{{tag}}">
@@ -61,9 +60,13 @@
                                        value={{ tag }}
                                 >
                                 <label for="{{ tag }}" class="tag">
-                                       {% if tag == 'slippery_slope' %} 
+                                       {% if tag == 'false' %}
 
-                                       <b>Slippery</b> slope: the sentence is factually true, but the consequences of the presented fact are exaggerated.
+                                        <b>False information</b>
+
+                                       {% elif tag == 'slippery_slope' %} 
+
+                                       <b>Slippery slope</b>: the sentence is factually true, but the consequences of the presented fact are exaggerated.
 
                                        {% elif tag == 'alleged_negative_consequences' %}
 

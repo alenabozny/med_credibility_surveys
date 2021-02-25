@@ -90,17 +90,19 @@ class Sentence(db.Model):
 
     @handle_nonexistent
     def get_left_context(self, iterator):
-        return Sentence.query.filter_by(
+        s =  Sentence.query.filter_by(
             sequence_nr=self.sequence_nr - iterator,
             article_id=self.article_id) \
             .first().body
+        return s
 
     @handle_nonexistent
     def get_right_context(self, iterator):
-        return Sentence.query.filter_by(
+        s = Sentence.query.filter_by(
             sequence_nr=self.sequence_nr + iterator,
             article_id=self.article_id) \
             .first().body
+        return s
 
     def get_context_sentences(self):
         sents = Sentence.query.filter_by(article_id=self.article_id)
@@ -153,11 +155,13 @@ class SecondTask(db.Model):
                                      "neutral/irrelevant",
                                     name="credrate_enum", create_type=False))
     steps = db.Column(db.Integer)
-    tags = db.Column("tags", db.Enum("slippery_slope", 
-                                     "alleged_negative_consequences",
-                                     "twisting_word",
-                                     "hedging", 
-                                    name="tags_enum", create_type=False))
+    tag = db.Column("tags", db.String(500))
+    # tags = db.Column("tags", db.Enum("slippery_slope", 
+    #                                  "alleged_negative_consequences",
+    #                                  "twisting_word",
+    #                                  "hedging", 
+    #                                  "false",
+    #                                 name="tags_enum", create_type=False))
     own_reason = db.Column(db.String(500))
 
     def __repr__(self):

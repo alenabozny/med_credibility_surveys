@@ -29,6 +29,13 @@ TAGS = [
     "jest niezrozumiałe lub niegramatyczne"
 ]
 
+TAGS_2 = [
+    "false",
+    "slippery_slope", 
+    "alleged_negative_consequences",
+    "twisting_word",
+    "hedging"
+]
 
 @app.route('/')
 @app.route('/index')
@@ -188,10 +195,7 @@ def perform_second_task(s_task_id):
                      "neutral/irrelevant"],
             sentence=task.sentence,
             keywords=keywords,
-            tags=["slippery_slope", 
-                  "alleged_negative_consequences",
-                  "twisting_word",
-                  "hedging"]
+            tags=TAGS_2
         )
     if request.method == 'POST':
         time_start = request.form['time_start']
