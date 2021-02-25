@@ -275,7 +275,7 @@ def add_second_tasks(user_id):
         form=form,
         user=user,
         disabledOptions=list(map(lambda task: second_task.s_task_id, disabledOptions)),
-        checkedOptions=list(map(lambda task: secodn_task.s_task_id, checkedOptions))
+        checkedOptions=list(map(lambda task: second_task.s_task_id, checkedOptions))
     )
 
 
