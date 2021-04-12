@@ -51,6 +51,7 @@ class Article(db.Model):
     title = db.Column(db.String(150))
     queryTxt = db.Column(db.String(100))
     keywords = db.Column(db.String(200))
+    category = db.Column(db.String(100))
     sentences = db.relationship('Sentence', backref='article')
 
     def __repr__(self):
