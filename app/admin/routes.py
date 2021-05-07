@@ -36,7 +36,7 @@ def user_add():
             name = form.name.data
             surname = form.surname.data
 
-            user = User(username=username, email=email, password_hash=password, name=name, surname=surname)
+            user = User(username=username, email=email, password=password, name=name, surname=surname)
             db.session.add(user)
             db.session.commit()
             flash('User was added')
